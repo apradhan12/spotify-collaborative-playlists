@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/spotify-collaborative-playlists/static/css/main.8c8b27cf.chunk.css",
+    "main.js": "/spotify-collaborative-playlists/static/js/main.4bf24bb1.chunk.js",
+    "main.js.map": "/spotify-collaborative-playlists/static/js/main.4bf24bb1.chunk.js.map",
+    "runtime-main.js": "/spotify-collaborative-playlists/static/js/runtime-main.d9e71e3c.js",
+    "runtime-main.js.map": "/spotify-collaborative-playlists/static/js/runtime-main.d9e71e3c.js.map",
+    "static/js/2.945e2405.chunk.js": "/spotify-collaborative-playlists/static/js/2.945e2405.chunk.js",
+    "static/js/2.945e2405.chunk.js.map": "/spotify-collaborative-playlists/static/js/2.945e2405.chunk.js.map",
+    "static/js/3.f13d4ec7.chunk.js": "/spotify-collaborative-playlists/static/js/3.f13d4ec7.chunk.js",
+    "static/js/3.f13d4ec7.chunk.js.map": "/spotify-collaborative-playlists/static/js/3.f13d4ec7.chunk.js.map",
+    "index.html": "/spotify-collaborative-playlists/index.html",
+    "static/css/main.8c8b27cf.chunk.css.map": "/spotify-collaborative-playlists/static/css/main.8c8b27cf.chunk.css.map",
+    "static/js/2.945e2405.chunk.js.LICENSE.txt": "/spotify-collaborative-playlists/static/js/2.945e2405.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/spotify-collaborative-playlists/static/media/logo.6ce24c58.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d9e71e3c.js",
+    "static/js/2.945e2405.chunk.js",
+    "static/css/main.8c8b27cf.chunk.css",
+    "static/js/main.4bf24bb1.chunk.js"
+  ]
+}
