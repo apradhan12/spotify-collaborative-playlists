@@ -1,0 +1,1 @@
+use this component folder structure to keep page-specific components under the page in the file hierarchy.
