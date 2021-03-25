@@ -1,3 +1,5 @@
+
+
 export interface User {
     username: string; // unique
     displayName: string;
@@ -13,6 +15,7 @@ export interface Playlist {
     pictureURL: string;
     description: string;
     songs: Song[];
+    creator: User;
     admins: User[];
     requests: SongRequest[];
 }
