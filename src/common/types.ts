@@ -15,6 +15,7 @@ export interface Playlist {
     pictureURL: string;
     description: string;
     songs: Song[];
+    creator: User;
     admins: User[];
     requests: SongRequest[];
 }
