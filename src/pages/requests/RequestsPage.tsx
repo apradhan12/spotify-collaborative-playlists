@@ -23,7 +23,7 @@ const idMapping: PlaylistMap = {
         songs: [
             {
                 id: "123",
-                title: "Don't Fear the Reaper",
+                title: "(Don't Fear) The Reaper",
                 artist: "Blue Öyster Cult",
                 album: "Agents of Fortune",
                 duration: 308
