@@ -15,7 +15,7 @@ class PLAYLISTS_APP extends React.Component {
   render() {
     return (
       <Container fluid>
-        <CustomNavbar />
+        <CustomNavbar displayName="jacob1972" loggedIn={false} />
         <Router>
           <Route path="/" component={Homepage} exact />
 
