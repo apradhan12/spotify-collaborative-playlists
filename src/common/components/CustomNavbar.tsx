@@ -14,6 +14,9 @@ export default class CustomNavbar extends React.Component<CustomNavbarProps> {
                     <p className="museo-display-black m-0">Spotify Collaborative Playlists</p>
                 </Navbar.Brand>
                 <Nav className="mr-auto">
+                    {/*<Nav.Link href="#playlist/abc/requests">*/}
+                    {/*    Requests*/}
+                    {/*</Nav.Link>*/}
                     <Form inline>
                         <FormControl type="text" placeholder="Type here..." className="mr-sm-2"/>
                         <Button variant="outline-light">Search</Button>
