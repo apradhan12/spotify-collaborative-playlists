@@ -11,18 +11,22 @@ interface Props {
     }
 }
 
-export default class ManageAdmin extends React.Component<Props> {
+interface State {
+    showHide: boolean;
+}
 
-    // constructor(props: Props){
-    //     super(props);
-    //     this.state = {
-    //         showHide : false
-    //     }
-    // }
+export default class ManageAdmin extends React.Component<Props, State> {
 
-    // handleModalShowHide() {
-    //     this.setState({ showHide: !this.state.showHide })
-    // }
+    constructor(props: Props){
+        super(props);
+        this.state = {
+            showHide: false
+        }
+    }
+
+    handleModalShowHide() {
+        this.setState({ showHide: !this.state.showHide })
+    }
 
     render(){
         const playlist = playlistMap[this.props.match.params.playlistId];
@@ -45,11 +49,25 @@ export default class ManageAdmin extends React.Component<Props> {
                 <Row>michelle1721</Row>
                 <Row>aaron1200</Row>
                 <Row>
-                    <Button>Add new administrator</Button>
+                    <Button variant="primary" onClick={() => this.handleModalShowHide()}>Add new administrator</Button>
                 </Row>
                 <Row>
                     <Button>Remove an administrator</Button>
                 </Row>
+                <Modal show={this.state.showHide}>
+                    <Modal.Header closeButton onClick={() => this.handleModalShowHide()}>
+                    <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={() => this.handleModalShowHide()}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={() => this.handleModalShowHide()}>
+                        Save Changes
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
             </Container>
         )
     }
