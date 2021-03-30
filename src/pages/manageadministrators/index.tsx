@@ -1,5 +1,9 @@
 import React from 'react'
+<<<<<<< HEAD
 import { Button, Container, Row, Col, Modal } from "react-bootstrap";
+=======
+import { Modal, Button, Container, Row } from "react-bootstrap";
+>>>>>>> Fix modal
 import { Link } from "react-router-dom";
 import {playlistMap, userMap} from "../../data";
 
