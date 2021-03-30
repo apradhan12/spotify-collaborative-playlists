@@ -1,37 +1,22 @@
 import React from 'react'
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { User } from "../../common/types";
+import { Col, Container, Row } from "react-bootstrap";
+import {userMap} from "../../data";
 
 interface Props {
     match: {
         params: {
-            userId: string;
+            username: string;
         }
     }
 }
 
-interface UserMap {
-    [key: string]: User;
-}
-
-const idMapping: UserMap = {
-    user1: {
-        username: "aaron1200",
-        displayName: "Aaron Pradhan",
-        profilePictureURL: "/album.jpg",
-        playlists: [],
-        followers: 20,
-        following: 31
-    }
-}
-
-class UserProfile extends React.Component {
+export default class UserProfile extends React.Component<Props> {
     render() {
-        const user = idMapping.user1
+        const user = userMap[this.props.match.params.username];
         return (
             <Container fluid>
                 <Row>
-                    <img src="https://picsum.photos/200/300" />
+                    <img src="https://picsum.photos/200/300"  alt={`${user.displayName}'s profile`} />
                     <Col>
                         <Row>
                             <div style={{ fontSize: "48px" }}>{user.username}</div>
@@ -54,6 +39,4 @@ class UserProfile extends React.Component {
         )
     }
 }
-
-export default UserProfile;
 

@@ -1,6 +1,7 @@
 import React from 'react'
-import { Modal, Button, Col, Container, Row } from "react-bootstrap";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { Button, Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import {playlistMap} from "../../data";
 
 interface Props {
     match: {
@@ -12,16 +13,14 @@ interface Props {
 
 interface State {
     showHide: boolean;
-
-
 }
 
-class ManageAdmin extends React.Component<Props, State> {
+export default class ManageAdmin extends React.Component<Props, State> {
 
     constructor(props: Props){
         super(props);
         this.state = {
-            showHide : false
+            showHide: false
         }
     }
 
@@ -30,16 +29,18 @@ class ManageAdmin extends React.Component<Props, State> {
     }
 
     render(){
+        const playlist = playlistMap[this.props.match.params.playlistId];
+
         return (
             <Container fluid>
                 <Row>
-                    <Link to="/">Go back to playlist</Link>
+                    <Link to={`/playlist/${playlist.id}`}>Go back to playlist</Link>
                 </Row>
                 <Row>
                     <div style={{ fontSize: "48px" }}>Manage Administrators</div>
                 </Row>
                 <Row>
-                    <p>Playlist: <Link to="/">Aaron's playlist "60s/70s Rock</Link> by <Link to="/user/:username">aaron1200</Link></p>
+                    <p>Playlist: <Link to={`/user/${playlist.creator.username}`}>{playlist.creator.displayName}</Link>'s playlist "{playlist.title}"</p>
                 </Row>
                 <Row>
                     <div style={{ fontSize: "28px" }}>Current Administrators</div>
@@ -71,5 +72,3 @@ class ManageAdmin extends React.Component<Props, State> {
         )
     }
 }
-
-export default ManageAdmin;
