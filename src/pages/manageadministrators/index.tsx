@@ -1,6 +1,5 @@
 import React from 'react'
-import { Modal } from 'react-bootstrap';
-import { Button, Container, Row } from "react-bootstrap";
+import { Button, Container, Row, Col, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {playlistMap, userMap} from "../../data";
 
@@ -34,28 +33,42 @@ export default class ManageAdmin extends React.Component<Props, State> {
         const creator = userMap[playlist.creator];
 
         return (
-            <Container fluid>
-                <Row>
-                    <Link to={`/playlist/${playlist.id}`}>Go back to playlist</Link>
+            <Container className="museo-300">
+                <Row className="my-4">
+                    <Col xs={12}>
+                        <Link to={`/playlist/${playlist.id}`}>&#8592; Go back to playlist</Link>
+                        <h1 className="museo-display-black">Manage Administrators</h1>
+                        <p>Playlist: <Link to={`/user/${creator.username}`}>{creator.displayName}</Link>'s playlist "{playlist.title}"</p>
+                    </Col>
+                </Row>
+                <Row className="mb-4">
+                    <Col xs={12}>
+                        <h3 className="museo-display-light">Current Administrators</h3>
+                        <ul>
+                            <li>
+                                <p className="m-0">joe-is-cool</p>
+                            </li>
+                            <li>
+                                <p className="m-0">michelle1721</p>
+                            </li>
+                            <li>
+                                <p className="m-0">aaron1200</p>
+                            </li>
+                        </ul>
+
+                    </Col>
+                </Row>
+                <Row className="mb-2">
+                    <Col xs={12}>
+                        <Button variant="primary" onClick={() => this.handleModalShowHide()}>Add new Administrator</Button>
+                    </Col>
                 </Row>
                 <Row>
-                    <div style={{ fontSize: "48px" }}>Manage Administrators</div>
+                    <Col xs={12}>
+                        <Button variant="danger">Remove an Administrator</Button>
+                    </Col>
                 </Row>
-                <Row>
-                    <p>Playlist: <Link to={`/user/${creator.username}`}>{creator.displayName}</Link>'s playlist "{playlist.title}"</p>
-                </Row>
-                <Row>
-                    <div style={{ fontSize: "28px" }}>Current Administrators</div>
-                </Row>
-                <Row>joe-is-cool</Row>
-                <Row>michelle1721</Row>
-                <Row>aaron1200</Row>
-                <Row>
-                    <Button variant="primary" onClick={() => this.handleModalShowHide()}>Add new administrator</Button>
-                </Row>
-                <Row>
-                    <Button>Remove an administrator</Button>
-                </Row>
+
                 <Modal show={this.state.showHide}>
                     <Modal.Header closeButton onClick={() => this.handleModalShowHide()}>
                     <Modal.Title>Modal heading</Modal.Title>
