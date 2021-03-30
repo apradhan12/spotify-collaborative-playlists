@@ -8,8 +8,8 @@ import PlaylistPage from './pages/playlist';
 
 import './common/css/typography.css';
 import RequestsPage from "./pages/requests";
-import UserProfile from './pages/userprofilepage/UserProfilePage';
-import ManageAdmin from './pages/manageadministrators/ManageAdminPage';
+import UserProfile from './pages/userprofilepage';
+import ManageAdmin from './pages/manageadministrators';
 
 class PLAYLISTS_APP extends React.Component {
     render() {
@@ -27,7 +27,7 @@ class PLAYLISTS_APP extends React.Component {
                     <Route path="/user/:username" component={UserProfile} exact/>
 
                     {/* Route to User profile page */}
-                    <Route path="/playlist/:playlistid/admins" component={ManageAdmin} exact/>
+                    <Route path="/playlist/:playlistId/admins" component={ManageAdmin} exact/>
                 </Router>
             </Container>
         );

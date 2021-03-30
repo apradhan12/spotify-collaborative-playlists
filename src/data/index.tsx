@@ -1,10 +1,10 @@
-import {Playlist} from "../common/types";
+import {Playlist, User} from "../common/types";
 
 export interface PlaylistMap {
     [key: string]: Playlist;
 }
 
-export const idMapping: PlaylistMap = {
+export const playlistMap: PlaylistMap = {
     abc: {
         id: "abc",
         title: "60s/70s Rock",
@@ -36,5 +36,20 @@ export const idMapping: PlaylistMap = {
         },
         admins: [],
         requests: []
+    }
+}
+
+interface UserMap {
+    [key: string]: User;
+}
+
+export const userMap: UserMap = {
+    aaron1200: {
+        username: "aaron1200",
+        displayName: "Aaron Pradhan",
+        profilePictureURL: "/album.jpg",
+        playlists: [],
+        followers: 20,
+        following: 31
     }
 }

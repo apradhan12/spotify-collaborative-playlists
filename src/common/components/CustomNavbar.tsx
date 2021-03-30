@@ -20,6 +20,12 @@ export default class CustomNavbar extends React.Component<CustomNavbarProps> {
                     <Nav.Link href="#playlist/abc">
                         playlist
                     </Nav.Link>
+                    <Nav.Link href="#user/aaron1200">
+                        User
+                    </Nav.Link>
+                    <Nav.Link href="#playlist/abc/admins">
+                        Admin
+                    </Nav.Link>
                     <Form inline>
                         <FormControl type="text" placeholder="Type here..." className="mr-sm-2"/>
                         <Button variant="outline-light">Search</Button>

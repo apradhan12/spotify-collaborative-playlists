@@ -1,6 +1,6 @@
 import {Component} from 'react';
 import {Button, Col, Container, Row, Table} from "react-bootstrap";
-import {idMapping} from "../../data";
+import {playlistMap} from "../../data";
 
 interface Props {
     match: {
@@ -27,7 +27,7 @@ function sum(nums: number[]) {
 
 export default class PlaylistPage extends Component<Props> {
     render() {
-        const playlist = idMapping[this.props.match.params.playlistId];
+        const playlist = playlistMap[this.props.match.params.playlistId];
         return (
             <Container>
                 <Row>
