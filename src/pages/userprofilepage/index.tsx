@@ -1,6 +1,6 @@
 import React from 'react'
 import { Col, Container, Row } from "react-bootstrap";
-import {userMap} from "../../data";
+import {playlistMap, userMap} from "../../data";
 
 interface Props {
     match: {
@@ -13,6 +13,7 @@ interface Props {
 export default class UserProfile extends React.Component<Props> {
     render() {
         const user = userMap[this.props.match.params.username];
+        const playlists = user.playlistIds.map(id => playlistMap[id]);
         return (
             <Container fluid>
                 <Row>
@@ -22,7 +23,7 @@ export default class UserProfile extends React.Component<Props> {
                             <div style={{ fontSize: "48px" }}>{user.username}</div>
                         </Row>
                         <Row>{user.followers} followers</Row>
-                        <Row>{user.playlists.length} playlists</Row>
+                        <Row>{playlists.length} playlists</Row>
                     </Col>
                 </Row>
                 <Row>

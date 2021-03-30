@@ -4,7 +4,7 @@ export interface User {
     username: string; // unique
     displayName: string;
     profilePictureURL: string;
-    playlists: Playlist[];
+    playlistIds: string[];
     followers: number;
     following: number;
 }
@@ -14,9 +14,9 @@ export interface Playlist {
     title: string;
     pictureURL: string;
     description: string;
-    songs: Song[];
-    creator: User;
-    admins: User[];
+    songIds: string[];
+    creator: string; // username
+    admins: string[]; // usernames
     requests: SongRequest[];
 }
 
@@ -30,8 +30,8 @@ export interface Song {
 
 export interface SongRequest {
     id: string;
-    userRequested: User;
+    userRequested: string; // username
     add: boolean;
     songs: Song[];
-    usersVoted: User[];
+    usersVoted: string[]; // array of usernames
 }

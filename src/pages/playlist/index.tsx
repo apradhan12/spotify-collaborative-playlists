@@ -1,6 +1,6 @@
 import {Component} from 'react';
 import {Button, Col, Container, Row, Table} from "react-bootstrap";
-import {playlistMap} from "../../data";
+import {playlistMap, songMap, userMap} from "../../data";
 
 interface Props {
     match: {
@@ -28,6 +28,8 @@ function sum(nums: number[]) {
 export default class PlaylistPage extends Component<Props> {
     render() {
         const playlist = playlistMap[this.props.match.params.playlistId];
+        const creator = userMap[playlist.creator];
+        const songs = playlist.songIds.map(id => songMap[id]);
         return (
             <Container>
                 <Row>
@@ -35,7 +37,7 @@ export default class PlaylistPage extends Component<Props> {
                     <Col>
                         Playlist<br/>
                         <h1>{playlist.title}</h1>
-                        Created by {playlist.creator.displayName} &bull; {playlist.songs.length} songs, {secondsToHoursString(sum(playlist.songs.map(song => song.duration)))}<br/>
+                        Created by {creator.displayName} &bull; {songs.length} songs, {secondsToHoursString(sum(songs.map(song => song.duration)))}<br/>
                         <Button>Share</Button>
                     </Col>
                 </Row>
@@ -54,7 +56,7 @@ export default class PlaylistPage extends Component<Props> {
                             </thead>
                             <tbody>
                             {
-                                Array.from(playlist.songs.entries()).map(([i, song]) => (
+                                Array.from(songs.entries()).map(([i, song]) => (
                                     <tr>
                                         <td>{i + 1}</td>
                                         <td>{song.title}</td>
