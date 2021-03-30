@@ -15,7 +15,7 @@ export default class RequestsPage extends Component<Props> {
             <Container>
                 <Row>
                     <Col>
-                        Hello world
+                        &#8592; Go back to playlist
                     </Col>
                 </Row>
             </Container>
