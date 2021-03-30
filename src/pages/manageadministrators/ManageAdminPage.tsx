@@ -2,26 +2,32 @@ import React from 'react'
 import { Modal, Button, Col, Container, Row } from "react-bootstrap";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
-// interface Props {
-//     match: {
-//         params: {
-//             playlistId: string;
-//         }
-//     }
-// }
+interface Props {
+    match: {
+        params: {
+            playlistId: string;
+        }
+    }
+}
 
-class ManageAdmin extends React.Component {
+interface State {
+    showHide: boolean;
 
-    // constructor(props: Props){
-    //     super(props);
-    //     this.state = {
-    //         showHide : false
-    //     }
-    // }
 
-    // handleModalShowHide() {
-    //     this.setState({ showHide: !this.state.showHide })
-    // }
+}
+
+class ManageAdmin extends React.Component<Props, State> {
+
+    constructor(props: Props){
+        super(props);
+        this.state = {
+            showHide : false
+        }
+    }
+
+    handleModalShowHide() {
+        this.setState({ showHide: !this.state.showHide })
+    }
 
     render(){
         return (
@@ -42,11 +48,25 @@ class ManageAdmin extends React.Component {
                 <Row>michelle1721</Row>
                 <Row>aaron1200</Row>
                 <Row>
-                    <Button>Add new administrator</Button>
+                    <Button variant="primary" onClick={() => this.handleModalShowHide()}>Add new administrator</Button>
                 </Row>
                 <Row>
                     <Button>Remove an administrator</Button>
                 </Row>
+                <Modal show={this.state.showHide}>
+                    <Modal.Header closeButton onClick={() => this.handleModalShowHide()}>
+                    <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={() => this.handleModalShowHide()}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={() => this.handleModalShowHide()}>
+                        Save Changes
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
             </Container>
         )
     }
