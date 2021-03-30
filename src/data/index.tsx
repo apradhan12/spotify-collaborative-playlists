@@ -28,7 +28,7 @@ export const playlistMap: PlaylistMap = {
         ],
         creator: {
             username: "aaron1200",
-            displayName: "Aaron",
+            displayName: "Aaron Pradhan",
             profilePictureURL: "/album.jpg",
             playlists: [],
             followers: 20,
@@ -48,8 +48,32 @@ export const userMap: UserMap = {
         username: "aaron1200",
         displayName: "Aaron Pradhan",
         profilePictureURL: "/album.jpg",
-        playlists: [],
+        playlists: [playlistMap.abc],
         followers: 20,
         following: 31
+    },
+    cooljoe24: {
+        username: "cooljoe24",
+        displayName: "Joe Biden",
+        profilePictureURL: "/album.jpg",
+        playlists: [],
+        followers: 54000,
+        following: 1200
+    },
+    michelle1721: {
+        username: "michelle1721",
+        displayName: "Michelle Christiansen",
+        profilePictureURL: "/album.jpg",
+        playlists: [],
+        followers: 235,
+        following: 67
+    },
+    sam230: {
+        username: "sam230",
+        displayName: "Sam Johnson",
+        profilePictureURL: "/album.jpg",
+        playlists: [],
+        followers: 10,
+        following: 21
     }
 }

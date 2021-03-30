@@ -1,7 +1,7 @@
 import React from 'react'
-import { Modal, Button, Container, Row } from "react-bootstrap";
+import { Modal, Button, Container, Row, Form, FormControl } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import {playlistMap} from "../../data";
+import { playlistMap } from "../../data";
 
 interface Props {
     match: {
@@ -17,7 +17,7 @@ interface State {
 
 export default class ManageAdmin extends React.Component<Props, State> {
 
-    constructor(props: Props){
+    constructor(props: Props) {
         super(props);
         this.state = {
             showHide: false
@@ -28,7 +28,7 @@ export default class ManageAdmin extends React.Component<Props, State> {
         this.setState({ showHide: !this.state.showHide })
     }
 
-    render(){
+    render() {
         const playlist = playlistMap[this.props.match.params.playlistId];
 
         return (
@@ -56,15 +56,17 @@ export default class ManageAdmin extends React.Component<Props, State> {
                 </Row>
                 <Modal show={this.state.showHide}>
                     <Modal.Header closeButton onClick={() => this.handleModalShowHide()}>
-                    <Modal.Title>Modal heading</Modal.Title>
+                        <Modal.Title>Add New Administrator</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                    <Modal.Body>
+                        <Form inline>
+                            <FormControl type="text" placeholder="Search Users..." className="mr-sm-2" />
+                            <Button variant="outline-light">Search</Button>
+                        </Form>
+                    </Modal.Body>
                     <Modal.Footer>
-                    <Button variant="secondary" onClick={() => this.handleModalShowHide()}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={() => this.handleModalShowHide()}>
-                        Save Changes
+                        <Button variant="secondary" onClick={() => this.handleModalShowHide()}>
+                            Close
                     </Button>
                     </Modal.Footer>
                 </Modal>
