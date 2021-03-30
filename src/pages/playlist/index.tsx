@@ -1,51 +1,12 @@
 import {Component} from 'react';
 import {Button, Col, Container, Row, Table} from "react-bootstrap";
-import {Playlist} from "../../common/types";
+import {idMapping} from "../../data";
 
 interface Props {
     match: {
         params: {
             playlistId: string;
         }
-    }
-}
-
-interface PlaylistMap {
-    [key: string]: Playlist;
-}
-
-const idMapping: PlaylistMap = {
-    abc: {
-        id: "abc",
-        title: "60s/70s Rock",
-        pictureURL: "/album.jpg",
-        description: "Best rock songs of the 1960s and 1970s",
-        songs: [
-            {
-                id: "123",
-                title: "(Don't Fear) The Reaper",
-                artist: "Blue Öyster Cult",
-                album: "Agents of Fortune",
-                duration: 308
-            },
-            {
-                id: "456",
-                title: "Don't Stop Me Now",
-                artist: "Queen",
-                album: "Jazz",
-                duration: 209
-            }
-        ],
-        creator: {
-            username: "aaron1200",
-            displayName: "Aaron",
-            profilePictureURL: "/album.jpg",
-            playlists: [],
-            followers: 20,
-            following: 31
-        },
-        admins: [],
-        requests: []
     }
 }
 
@@ -64,7 +25,7 @@ function sum(nums: number[]) {
     return nums.reduce((a, b) => a + b, 0)
 }
 
-export default class RequestsPage extends Component<Props> {
+export default class PlaylistPage extends Component<Props> {
     render() {
         const playlist = idMapping[this.props.match.params.playlistId];
         return (

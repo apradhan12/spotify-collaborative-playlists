@@ -3,10 +3,11 @@ import {Container} from 'react-bootstrap';
 import {HashRouter as Router, Route} from 'react-router-dom'
 import CustomNavbar from './common/components/CustomNavbar';
 
-import Homepage from './pages/homepage/Homepage';
-import RequestsPage from './pages/requests/RequestsPage';
+import Homepage from './pages/homepage';
+import PlaylistPage from './pages/playlist';
 
 import './common/css/typography.css'
+import RequestsPage from "./pages/requests";
 
 class PLAYLISTS_APP extends React.Component {
     render() {
@@ -17,6 +18,7 @@ class PLAYLISTS_APP extends React.Component {
                     <Route path="/" component={Homepage} exact/>
 
                     {/* In order to access this playlist ID from the pages that need it, you need to use props.match.params.<VARIABLE_NAME> in that component */}
+                    <Route path="/playlist/:playlistId" component={PlaylistPage} exact/>
                     <Route path="/playlist/:playlistId/requests" component={RequestsPage} exact/>
                 </Router>
             </Container>
