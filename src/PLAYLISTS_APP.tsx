@@ -58,11 +58,7 @@ class PLAYLISTS_APP extends React.Component<{}, State> {
 
     handleLoginSubmission(): void {
         if (this.state.inputUsername && this.state.inputPassword) {
-            console.log("USERNAME: " + this.state.inputUsername)
-            console.log("PASSWORD: " + this.state.inputPassword)
-
             if (this.state.inputPassword.toLowerCase() === "password" && this.state.inputUsername.toLowerCase() === "hci2021") {
-
                 this.setState({
                     loggedInUser: userMap['hci2021'],
                     showHide: false,
@@ -98,7 +94,7 @@ class PLAYLISTS_APP extends React.Component<{}, State> {
                         <Route path="/playlist/:playlistId/admins" component={ManageAdmin} exact/>
                     </Router>
 
-                    <Modal show={this.state.showHide} animation={false}>
+                    <Modal show={this.state.showHide} animation={false} backdrop="static">
                     <Modal.Header onClick={() => this.handleModalShowHide()}>
                         <Modal.Title>Log into your account</Modal.Title>
                     </Modal.Header>

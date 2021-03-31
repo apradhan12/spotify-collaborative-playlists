@@ -68,7 +68,7 @@ export default class ManageAdmin extends React.Component<Props, State> {
                     </Col>
                 </Row>
 
-                <Modal show={this.state.showHide}>
+                <Modal show={this.state.showHide} backdrop="static">
                     <Modal.Header closeButton onClick={() => this.handleModalShowHide()}>
                     <Modal.Title>Modal heading</Modal.Title>
                     </Modal.Header>

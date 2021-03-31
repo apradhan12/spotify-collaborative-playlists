@@ -180,7 +180,7 @@ export default class RequestsPage extends React.Component<Props, State> {
                     </Col>
                 </Row>
 
-                <Modal show={this.state.showAddSong} animation={false} dialogClassName="larger-width-modal">
+                <Modal show={this.state.showAddSong} animation={false} dialogClassName="larger-width-modal" backdrop="static">
                     <Modal.Header>
                         <Modal.Title>Request to add a song</Modal.Title>
                     </Modal.Header>
@@ -251,7 +251,7 @@ export default class RequestsPage extends React.Component<Props, State> {
                     </Modal.Footer>
                 </Modal>
 
-                <Modal show={this.state.showRemoveSong} animation={false} dialogClassName="larger-width-modal">
+                <Modal show={this.state.showRemoveSong} animation={false} dialogClassName="larger-width-modal" backdrop="static">
                     <Modal.Header>
                         <Modal.Title>Request to remove a song</Modal.Title>
                     </Modal.Header>
