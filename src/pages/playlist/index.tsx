@@ -28,7 +28,7 @@ export default class PlaylistPage extends Component<Props> {
                         <p className="museo-display-light m-0">Playlist</p>
                         <h1 className="museo-display-black">{playlist.title}</h1>
                         <p className="museo-300">Created by <Link to={`/user/${creator.username}`}>{creator.displayName}</Link> &bull; {songs.length} songs, {secondsToHoursString(sum(songs.map(song => song.duration)))}</p>
-                        <Button variant="outline-primary" className="museo-300">Share</Button>
+                        <Button variant="outline-secondary" className="museo-300">Share</Button>
                     </Col>
                     <Col xs={4} className="text-right">
                         { (creator.username !== this.props.loggedInUsername) && (  
@@ -54,7 +54,7 @@ export default class PlaylistPage extends Component<Props> {
                         { (creator.username === this.props.loggedInUsername) && (  
                             <div>
                                 <Link to={`/playlist/${playlist.id}/requests`}>
-                                    <Button variant="outline-secondary" className="museo-300 mb-2">Manage Song Requests</Button><br />
+                                    <Button variant="primary" className="museo-300 mb-2">Manage Song Requests</Button><br />
                                 </Link>
                                 <Link to={`/playlist/${playlist.id}/admins`}>
                                     <Button variant="outline-secondary" className="museo-300 mb-2">Manage Administrators</Button><br />
