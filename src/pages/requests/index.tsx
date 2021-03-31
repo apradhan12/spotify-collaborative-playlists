@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {Button, Col, Container, Form, FormControl, Modal, Row, Table} from "react-bootstrap";
-import {Link} from "react-router-dom";
-import {playlistMap, songMap, userMap} from "../../common/data";
-import {secondsToMinutesString} from "../../common/utils";
-import {SongRequest} from "../../common/types";
+import React, { Component } from 'react';
+import { Button, Col, Container, Form, FormControl, Modal, Row, Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { playlistMap, songMap, userMap } from "../../common/data";
+import { secondsToMinutesString } from "../../common/utils";
+import { SongRequest } from "../../common/types";
 import "./style.css";
 import { ChangeEvent } from 'react';
 import { Playlist } from '../../common/types';
@@ -19,33 +19,33 @@ class RequestsTable extends Component<RequestsTableProps> {
         return (
             <Table striped bordered hover>
                 <thead>
-                <tr>
-                    <th className="customHeader-1">#</th>
-                    <th className="customHeader-2">Title</th>
-                    <th className="customHeader-2">Artist</th>
-                    <th className="customHeader-2">Album</th>
-                    <th className="customHeader-1">Date Added</th>
-                    <th className="customHeader-1">Duration</th>
-                    <th className="customHeader-1">Votes</th>
-                    <th className="customHeader-2">Actions</th>
-                </tr>
+                    <tr>
+                        <th className="customHeader-1">#</th>
+                        <th className="customHeader-2">Title</th>
+                        <th className="customHeader-2">Artist</th>
+                        <th className="customHeader-2">Album</th>
+                        <th className="customHeader-1">Date Added</th>
+                        <th className="customHeader-1">Duration</th>
+                        <th className="customHeader-1">Votes</th>
+                        <th className="customHeader-2">Actions</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {
-                    Array.from(this.props.requests.entries()).map(([i, request]) => (
-                        <tr key={request.id}>
-                            <td>{i + 1}</td>
-                            <td>{request.song.title}</td>
-                            <td>{request.song.artist}</td>
-                            <td>{request.song.album}</td>
-                            <td>2021-03-30</td>
-                            <td>{secondsToMinutesString(request.song.duration)}</td>
-                            <td>{request.usersVoted.length}</td>
-                            { !this.props.adminPermissions && <td><Button variant="outline-secondary">Vote for Request</Button></td> }
-                            { this.props.adminPermissions && <td><Button variant="primary" onClick={this.props.handleAcceptRequest(request.song.id, request.id)}>Accept Request</Button></td> }
-                        </tr>
-                    ))
-                }
+                    {
+                        Array.from(this.props.requests.entries()).map(([i, request]) => (
+                            <tr key={request.id}>
+                                <td>{i + 1}</td>
+                                <td>{request.song.title}</td>
+                                <td>{request.song.artist}</td>
+                                <td>{request.song.album}</td>
+                                <td>2021-03-30</td>
+                                <td>{secondsToMinutesString(request.song.duration)}</td>
+                                <td>{request.usersVoted.length}</td>
+                                {!this.props.adminPermissions && <td><Button variant="outline-secondary">Vote for Request</Button></td>}
+                                {this.props.adminPermissions && <td><Button variant="primary" onClick={this.props.handleAcceptRequest(request.song.id, request.id)}>Accept Request</Button></td>}
+                            </tr>
+                        ))
+                    }
                 </tbody>
             </Table>
         );
@@ -89,7 +89,7 @@ const REMOVE_REQUEST_TH_LABELS = {
 }
 
 export default class RequestsPage extends React.Component<Props, State> {
-    constructor(props: Props){
+    constructor(props: Props) {
         super(props);
         this.state = {
             showAddSong: (this.props.location.state !== undefined) && (this.props.location.state.showAddSong === true),
@@ -107,11 +107,11 @@ export default class RequestsPage extends React.Component<Props, State> {
     }
 
     toggleAddSong() {
-        this.setState(prevState => ({addSearchQuery: "", addSearchFocused: false, selectedAddSongId: "", showAddSong: !prevState.showAddSong}));
+        this.setState(prevState => ({ addSearchQuery: "", addSearchFocused: false, selectedAddSongId: "", showAddSong: !prevState.showAddSong }));
     }
 
     toggleRemoveSong() {
-        this.setState(prevState => ({removeSongIds: [], showRemoveSong: !prevState.showRemoveSong}));
+        this.setState(prevState => ({ removeSongIds: [], showRemoveSong: !prevState.showRemoveSong }));
     }
 
     updateSearchQuery(event: ChangeEvent<HTMLInputElement>) {
@@ -154,12 +154,12 @@ export default class RequestsPage extends React.Component<Props, State> {
                     </Col>
                 </Row>
                 <Row className="mb-4">
-                    <Col xs={8}>  
+                    <Col xs={8}>
                         <h1 className="museo-display-black">Song Requests</h1>
                         Playlist: <Link to={`/playlist/${playlist.id}`}>{playlist.title}</Link> by <Link to={`/user/${creator.username}`}>{creator.displayName}</Link>
                     </Col>
                     <Col xs={4} className="text-right">
-                        { creator.username !== this.props.loggedInUsername && (
+                        {creator.username !== this.props.loggedInUsername && (
                             <div>
                                 <Button variant="outline-primary" className="museo-300 mb-2" onClick={this.toggleAddSong}>Request to add a song</Button><br />
                                 <Button variant="outline-danger" className="museo-300 mb-2" onClick={this.toggleRemoveSong}>Request to remove a song</Button>
@@ -186,7 +186,7 @@ export default class RequestsPage extends React.Component<Props, State> {
                     </Modal.Header>
                     <Modal.Body className="px-3">
                         <Form
-                            onFocus={() => this.setState({addSearchFocused: true})}
+                            onFocus={() => this.setState({ addSearchFocused: true })}
                         >
                             <FormControl
                                 autoFocus
@@ -200,30 +200,30 @@ export default class RequestsPage extends React.Component<Props, State> {
                                     (
                                         <Table className="mx-3 w-auto">
                                             <thead>
-                                            <tr>
-                                                <th>Song</th>
-                                                <th>Artist</th>
-                                                <th>Album</th>
-                                            </tr>
+                                                <tr>
+                                                    <th>Song</th>
+                                                    <th>Artist</th>
+                                                    <th>Album</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-                                            {
-                                                Array.from(Object.entries(songMap))
-                                                    .filter(([_, song]) =>
-                                                        song.title.toLowerCase().includes(this.state.addSearchQuery.toLowerCase()))
-                                                    .map(([_, song]) => (
-                                                        <tr className="dropdown-item"
-                                                            role="button"
-                                                            style={{display: "table-row"}}
-                                                            onClick={() => this.setState({selectedAddSongId: song.id, addSearchFocused: false})}
-                                                            key={song.id}
-                                                        >
-                                                            <td>{song.title}</td>
-                                                            <td>{song.artist}</td>
-                                                            <td>{song.album}</td>
-                                                        </tr>
-                                                    ))
-                                            }
+                                                {
+                                                    Array.from(Object.entries(songMap))
+                                                        .filter(([_, song]) =>
+                                                            song.title.toLowerCase().includes(this.state.addSearchQuery.toLowerCase()))
+                                                        .map(([_, song]) => (
+                                                            <tr className="dropdown-item"
+                                                                role="button"
+                                                                style={{ display: "table-row" }}
+                                                                onClick={() => this.setState({ selectedAddSongId: song.id, addSearchFocused: false })}
+                                                                key={song.id}
+                                                            >
+                                                                <td>{song.title}</td>
+                                                                <td>{song.artist}</td>
+                                                                <td>{song.album}</td>
+                                                            </tr>
+                                                        ))
+                                                }
                                             </tbody>
                                         </Table>
                                     )
@@ -234,15 +234,15 @@ export default class RequestsPage extends React.Component<Props, State> {
                             }
                         </Form>
                     </Modal.Body>
-                    <Modal.Footer style={{justifyContent: "flex-start"}}>
+                    <Modal.Footer style={{ justifyContent: "flex-start" }}>
                         <Button variant="outline-secondary" onClick={this.toggleAddSong}>
                             Close this window
                         </Button>
                         {
                             this.state.selectedAddSongId ? (
                                 <Button variant="primary" onClick={() => {
-                                    playlistMap[playlist.id].addRequests.push({id: "s1234", song: songMap[this.state.selectedAddSongId], usersVoted: ["me"]});
-                                    this.setState({addSearchQuery: "", addSearchFocused: false, selectedAddSongId: "", showAddSong: false});
+                                    playlistMap[playlist.id].addRequests.push({ id: "s1234", song: songMap[this.state.selectedAddSongId], usersVoted: ["me"] });
+                                    this.setState({ addSearchQuery: "", addSearchFocused: false, selectedAddSongId: "", showAddSong: false });
                                 }}>
                                     Request this song
                                 </Button>
@@ -258,52 +258,59 @@ export default class RequestsPage extends React.Component<Props, State> {
                     <Modal.Body>
                         <Table striped bordered hover>
                             <thead>
-                            <tr>
-                                {
-                                    Array.from(Object.entries(REMOVE_REQUEST_TH_LABELS)).map(([label, colWidth]) =>
-                                        <th key={label} className={"customHeader-" + colWidth}>{label}</th>
-                                    )
-                                }
-                            </tr>
+                                <tr>
+                                    {
+                                        Array.from(Object.entries(REMOVE_REQUEST_TH_LABELS)).map(([label, colWidth]) =>
+                                            <th key={label} className={"customHeader-" + colWidth}>{label}</th>
+                                        )
+                                    }
+                                </tr>
                             </thead>
                             <tbody>
-                            {
-                                Array.from(songs.entries()).map(([i, song]) => (
-                                    this.state.removeSongIds.includes(song.id) ? (
-                                        <tr key={song.id}>
-                                            <td colSpan={Object.keys(REMOVE_REQUEST_TH_LABELS).length}>
-                                                You requested to remove {song.title}.&nbsp;
+                                {
+                                    Array.from(songs.entries()).map(([i, song]) => (
+                                        this.state.removeSongIds.includes(song.id) ? (
+                                            <tr key={song.id}>
+                                                <td colSpan={Object.keys(REMOVE_REQUEST_TH_LABELS).length}>
+                                                    You requested to remove {song.title}.&nbsp;
                                                 <Button
-                                                    variant="outline-secondary"
-                                                    onClick={() => this.setState(prevState => ({removeSongIds: prevState.removeSongIds.filter(id => id !== song.id)}))}
-                                                >
-                                                    Undo
+                                                        variant="outline-secondary"
+                                                        onClick={() => this.setState(prevState => ({ removeSongIds: prevState.removeSongIds.filter(id => id !== song.id) }))}
+                                                    >
+                                                        Undo
                                                 </Button>
-                                            </td>
-                                        </tr>
-                                    ) : (
-                                        <tr key={song.id}>
-                                            <td>{i + 1}</td>
-                                            <td>{song.title}</td>
-                                            <td>{song.artist}</td>
-                                            <td>{song.album}</td>
-                                            <td>2021-03-30</td>
-                                            <td>{secondsToMinutesString(song.duration)}</td>
-                                            <td><Button variant="outline-danger" onClick={() => this.setState(prevState => {
-                                                if (!prevState.removeSongIds.includes(song.id)) {
-                                                    return {removeSongIds: prevState.removeSongIds.concat(song.id)};
-                                                }
-                                                return {removeSongIds: prevState.removeSongIds};
-                                            })}>Request to remove</Button></td>
-                                        </tr>
-                                    )
-                                ))
-                            }
+                                                </td>
+                                            </tr>
+                                        ) : (
+                                                <tr key={song.id}>
+                                                    <td>{i + 1}</td>
+                                                    <td>{song.title}</td>
+                                                    <td>{song.artist}</td>
+                                                    <td>{song.album}</td>
+                                                    <td>2021-03-30</td>
+                                                    <td>{secondsToMinutesString(song.duration)}</td>
+                                                    <td><Button variant="outline-danger" onClick={() => this.setState(prevState => {
+                                                        if (!prevState.removeSongIds.includes(song.id)) {
+                                                            return { removeSongIds: prevState.removeSongIds.concat(song.id) };
+                                                        }
+                                                        return { removeSongIds: prevState.removeSongIds };
+                                                    })}>Request to remove</Button></td>
+                                                </tr>
+                                            )
+                                    ))
+                                }
                             </tbody>
                         </Table>
                     </Modal.Body>
-                    <Modal.Footer style={{justifyContent: "flex-start"}}>
-                        <Button variant="secondary" onClick={this.toggleRemoveSong}>
+                    <Modal.Footer style={{ justifyContent: "flex-start" }}>
+                        <Button variant="primary" onClick={() => {
+                            this.state.removeSongIds.forEach(element => {
+                                playlistMap[playlist.id].removeRequests.push({ id: "s1234", song: songMap[element], usersVoted: ["me"] });
+                            this.setState({ addSearchQuery: "", addSearchFocused: false, removeSongIds: [], showAddSong: false });
+                            this.toggleRemoveSong()
+                            });
+                            
+                        }}>
                             Finish requesting song removals
                         </Button>
                     </Modal.Footer>
