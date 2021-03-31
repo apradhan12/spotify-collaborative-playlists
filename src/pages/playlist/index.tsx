@@ -33,10 +33,16 @@ export default class PlaylistPage extends Component<Props> {
                     <Col xs={4} className="text-right">
                         { (creator.username !== this.props.loggedInUsername) && (  
                             <div>
-                                <Link to={`/playlist/${playlist.id}/requests`}>
+                                <Link to={{
+                                    pathname: `/playlist/${playlist.id}/requests`,
+                                    state: {showAddSong: true}
+                                }}>
                                     <Button variant="outline-primary" className="museo-300 mb-2">Request to add a song</Button><br />
                                 </Link>
-                                <Link to={`/playlist/${playlist.id}/requests`}>
+                                <Link to={{
+                                    pathname: `/playlist/${playlist.id}/requests`,
+                                    state: {showRemoveSong: true}
+                                }}>
                                     <Button variant="outline-danger" className="museo-300 mb-2">Request to remove a song</Button><br />
                                 </Link>
                                 <Link to={`/playlist/${playlist.id}/requests`}>

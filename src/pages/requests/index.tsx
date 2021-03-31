@@ -6,17 +6,7 @@ import {secondsToMinutesString} from "../../common/utils";
 import {SongRequest} from "../../common/types";
 import "./style.css";
 import { ChangeEvent } from 'react';
-
-import { Playlist } from '../../common/types'
-
-interface Props {
-    match: {
-        params: {
-            playlistId: string;
-        }
-    },
-    loggedInUsername: string;
-}
+import { Playlist } from '../../common/types';
 
 interface RequestsTableProps {
     requests: SongRequest[];
@@ -62,35 +52,71 @@ class RequestsTable extends Component<RequestsTableProps> {
     }
 }
 
+interface Props {
+    match: {
+        params: {
+            playlistId: string;
+        }
+    }
+    location: {
+        state?: LocationState;
+    },
+    loggedInUsername: string;
+}
+
 interface State {
-    showHide: boolean;
-    searchQuery: string;
-    selectedSongId: string;
-    searchFocused: boolean;
+    showAddSong: boolean;
+    showRemoveSong: boolean;
+    addSearchQuery: string;
+    selectedAddSongId: string;
+    addSearchFocused: boolean;
+    removeSongIds: string[];
+}
+
+interface LocationState {
+    showAddSong?: boolean;
+    showRemoveSong?: boolean;
+}
+
+const REMOVE_REQUEST_TH_LABELS = {
+    "#": 1,
+    "Title": 2,
+    "Artist": 2,
+    "Album": 2,
+    "Date Added": 2,
+    "Duration": 1,
+    "Actions": 2
 }
 
 export default class RequestsPage extends React.Component<Props, State> {
     constructor(props: Props){
         super(props);
         this.state = {
-            showHide: false,
-            searchQuery: "",
-            selectedSongId: "",
-            searchFocused: false
+            showAddSong: (this.props.location.state !== undefined) && (this.props.location.state.showAddSong === true),
+            showRemoveSong: (this.props.location.state !== undefined) && (this.props.location.state.showRemoveSong === true),
+            addSearchQuery: "",
+            selectedAddSongId: "",
+            addSearchFocused: false,
+            removeSongIds: []
         }
-        this.handleModalShowHide = this.handleModalShowHide.bind(this);
+        this.toggleAddSong = this.toggleAddSong.bind(this);
+        this.toggleRemoveSong = this.toggleRemoveSong.bind(this);
         this.updateSearchQuery = this.updateSearchQuery.bind(this);
         this.handleAcceptAddRequest = this.handleAcceptAddRequest.bind(this);
         this.handleAcceptRemoveRequest = this.handleAcceptRemoveRequest.bind(this)
     }
 
-    handleModalShowHide() {
-        this.setState(prevState => ({ showHide: !prevState.showHide }));
+    toggleAddSong() {
+        this.setState(prevState => ({addSearchQuery: "", addSearchFocused: false, selectedAddSongId: "", showAddSong: !prevState.showAddSong}));
+    }
+
+    toggleRemoveSong() {
+        this.setState(prevState => ({removeSongIds: [], showRemoveSong: !prevState.showRemoveSong}));
     }
 
     updateSearchQuery(event: ChangeEvent<HTMLInputElement>) {
         this.setState({
-            searchQuery: event.target.value
+            addSearchQuery: event.target.value
         });
     }
 
@@ -119,6 +145,7 @@ export default class RequestsPage extends React.Component<Props, State> {
     render() {
         const playlist = playlistMap[this.props.match.params.playlistId];
         const creator = userMap[playlist.creator];
+        const songs = playlist.songIds.map(id => songMap[id]);
         return (
             <Container className="museo-300">
                 <Row className="mt-4">
@@ -134,13 +161,10 @@ export default class RequestsPage extends React.Component<Props, State> {
                     <Col xs={4} className="text-right">
                         { creator.username !== this.props.loggedInUsername && (
                             <div>
-                                <Button variant="outline-primary" className="museo-300 mb-2" onClick={this.handleModalShowHide}>Request to add a song</Button><br />
-                                <Link to={`/playlist/${playlist.id}/requests`}>
-                                    <Button variant="outline-danger" className="museo-300 mb-2">Request to remove a song</Button><br />
-                                </Link>
+                                <Button variant="outline-primary" className="museo-300 mb-2" onClick={this.toggleAddSong}>Request to add a song</Button><br />
+                                <Button variant="outline-danger" className="museo-300 mb-2" onClick={this.toggleRemoveSong}>Request to remove a song</Button>
                             </div>
                         )}
-                        
                     </Col>
                 </Row>
                 <Row className="mb-4">
@@ -156,23 +180,23 @@ export default class RequestsPage extends React.Component<Props, State> {
                     </Col>
                 </Row>
 
-                <Modal show={this.state.showHide} animation={false} dialogClassName="larger-width-modal">
-                    <Modal.Header onClick={() => this.handleModalShowHide()}>
+                <Modal show={this.state.showAddSong} animation={false} dialogClassName="larger-width-modal">
+                    <Modal.Header>
                         <Modal.Title>Request to add a song</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form
-                            onFocus={() => this.setState({searchFocused: true})}
+                            onFocus={() => this.setState({addSearchFocused: true})}
                         >
                             <FormControl
                                 autoFocus
                                 className="mx-3 my-2 w-auto"
-                                placeholder="Type to filter..."
-                                value={this.state.searchQuery}
+                                placeholder="Type the song title here..."
+                                value={this.state.addSearchQuery}
                                 onChange={this.updateSearchQuery}
                             />
                             {
-                                (this.state.searchQuery && (!this.state.selectedSongId || this.state.searchFocused)) ?
+                                (this.state.addSearchQuery && (!this.state.selectedAddSongId || this.state.addSearchFocused)) ?
                                     (
                                         <Table className="mx-3 w-auto">
                                             <thead>
@@ -186,12 +210,13 @@ export default class RequestsPage extends React.Component<Props, State> {
                                             {
                                                 Array.from(Object.entries(songMap))
                                                     .filter(([_, song]) =>
-                                                        song.title.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
+                                                        song.title.toLowerCase().includes(this.state.addSearchQuery.toLowerCase()))
                                                     .map(([_, song]) => (
                                                         <tr className="dropdown-item"
                                                             role="button"
                                                             style={{display: "table-row"}}
-                                                            onClick={() => {this.setState({selectedSongId: song.id, searchFocused: false}); console.log(song.title)}}
+                                                            onClick={() => this.setState({selectedAddSongId: song.id, addSearchFocused: false})}
+                                                            key={song.id}
                                                         >
                                                             <td>{song.title}</td>
                                                             <td>{song.artist}</td>
@@ -205,24 +230,82 @@ export default class RequestsPage extends React.Component<Props, State> {
                                     : ""
                             }
                             {
-                                this.state.selectedSongId ? songMap[this.state.selectedSongId].title : ""
+                                this.state.selectedAddSongId ? songMap[this.state.selectedAddSongId].title : ""
                             }
                         </Form>
                     </Modal.Body>
                     <Modal.Footer style={{justifyContent: "flex-start"}}>
-                        <Button variant="secondary" onClick={() => {this.setState({searchQuery: "", searchFocused: false, selectedSongId: "", showHide: false})}}>
+                        <Button variant="outline-secondary" onClick={this.toggleAddSong}>
                             Close this window
                         </Button>
                         {
-                            this.state.selectedSongId ? (
+                            this.state.selectedAddSongId ? (
                                 <Button variant="primary" onClick={() => {
-                                    playlistMap[playlist.id].addRequests.push({id: "s1234", song: songMap[this.state.selectedSongId], usersVoted: ["me"]});
-                                    this.setState({searchQuery: "", searchFocused: false, selectedSongId: "", showHide: false});
+                                    playlistMap[playlist.id].addRequests.push({id: "s1234", song: songMap[this.state.selectedAddSongId], usersVoted: ["me"]});
+                                    this.setState({addSearchQuery: "", addSearchFocused: false, selectedAddSongId: "", showAddSong: false});
                                 }}>
                                     Request this song
                                 </Button>
                             ) : ""
                         }
+                    </Modal.Footer>
+                </Modal>
+
+                <Modal show={this.state.showRemoveSong} animation={false} dialogClassName="larger-width-modal">
+                    <Modal.Header>
+                        <Modal.Title>Request to remove a song</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Table striped bordered hover className="museo-300">
+                            <thead>
+                            <tr>
+                                {
+                                    Array.from(Object.entries(REMOVE_REQUEST_TH_LABELS)).map(([label, colWidth]) =>
+                                        <th key={label} className={"customHeader-" + colWidth}>{label}</th>
+                                    )
+                                }
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {
+                                Array.from(songs.entries()).map(([i, song]) => (
+                                    this.state.removeSongIds.includes(song.id) ? (
+                                        <tr key={song.id}>
+                                            <td colSpan={Object.keys(REMOVE_REQUEST_TH_LABELS).length}>
+                                                You requested to remove {song.title}.&nbsp;
+                                                <Button
+                                                    variant="outline-secondary"
+                                                    onClick={() => this.setState(prevState => ({removeSongIds: prevState.removeSongIds.filter(id => id !== song.id)}))}
+                                                >
+                                                    Undo
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    ) : (
+                                        <tr key={song.id}>
+                                            <td>{i + 1}</td>
+                                            <td>{song.title}</td>
+                                            <td>{song.artist}</td>
+                                            <td>{song.album}</td>
+                                            <td>2021-03-30</td>
+                                            <td>{secondsToMinutesString(song.duration)}</td>
+                                            <td><Button variant="outline-danger" onClick={() => this.setState(prevState => {
+                                                if (!prevState.removeSongIds.includes(song.id)) {
+                                                    return {removeSongIds: prevState.removeSongIds.concat(song.id)};
+                                                }
+                                                return {removeSongIds: prevState.removeSongIds};
+                                            })}>Request to remove</Button></td>
+                                        </tr>
+                                    )
+                                ))
+                            }
+                            </tbody>
+                        </Table>
+                    </Modal.Body>
+                    <Modal.Footer style={{justifyContent: "flex-start"}}>
+                        <Button variant="outline-primary" onClick={this.toggleRemoveSong}>
+                            Finish requesting song removals
+                        </Button>
                     </Modal.Footer>
                 </Modal>
             </Container>
