@@ -59,7 +59,7 @@ export default function PlaylistPage(props: Props) {
                             <Link to={`/playlist/${playlist.id}/requests`}>
                                 <Button variant="outline-secondary" className="museo-300 mb-2">View song requests</Button><br />
                             </Link>
-                            <p className="museo-300 mb-2"> If you're an admin of this playlist, log in to manage song requests </p>
+                            <p className="museo-300 mb-2">If you're an admin of this playlist, log in to manage song requests.</p>
                         </div>
                     )}
                     { (creator.username === props.loggedInUsername) && (

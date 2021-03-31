@@ -1,5 +1,5 @@
 import React, { ChangeEvent, Component } from 'react'
-import { Form, FormControl, Table, Button } from 'react-bootstrap';
+import { Form, FormControl, Table } from 'react-bootstrap';
 import { playlistMap } from '../data';
 
 
@@ -65,6 +65,7 @@ export default class PlaylistSearchBar extends Component<Props, State>  {
                                               window.location.href = `#/playlist/${playlist.id}`
                                               this.setState({searchFocused: false, searchQuery: ""}); 
                                             }}
+                                            key={playlist.id}
                                         >
                                             <td>{playlist.title}</td>
                                             <td>{playlist.creator}</td>

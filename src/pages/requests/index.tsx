@@ -62,6 +62,8 @@ interface Props {
         state?: LocationState;
     },
     loggedInUsername?: string;
+    toggleLoginModal: (callback?: () => void) => () => void;
+    history: any; // todo fix this
 }
 
 interface State {
@@ -103,7 +105,7 @@ export default class RequestsPage extends React.Component<Props, State> {
         this.toggleRemoveSong = this.toggleRemoveSong.bind(this);
         this.updateSearchQuery = this.updateSearchQuery.bind(this);
         this.handleAcceptAddRequest = this.handleAcceptAddRequest.bind(this);
-        this.handleAcceptRemoveRequest = this.handleAcceptRemoveRequest.bind(this)
+        this.handleAcceptRemoveRequest = this.handleAcceptRemoveRequest.bind(this);
     }
 
     toggleAddSong() {
@@ -123,22 +125,22 @@ export default class RequestsPage extends React.Component<Props, State> {
     handleAcceptAddRequest(songId: string, requestId: string) {
         return () => {
             let playlist: Playlist = playlistMap[this.props.match.params.playlistId];
-            playlist.addRequests = playlist.addRequests.filter((request) => request.id !== requestId)
-            playlist.songIds = playlist.songIds.concat(songId)
+            playlist.addRequests = playlist.addRequests.filter((request) => request.id !== requestId);
+            playlist.songIds = playlist.songIds.concat(songId);
 
             playlistMap[this.props.match.params.playlistId] = playlist;
-            this.forceUpdate()
+            this.forceUpdate();
         }
     }
 
     handleAcceptRemoveRequest(songId: string, requestId: string) {
         return () => {
             let playlist: Playlist = playlistMap[this.props.match.params.playlistId];
-            playlist.addRequests = playlist.addRequests.filter((request) => request.id !== requestId)
-            playlist.songIds = playlist.songIds.filter((id) => id !== songId)
+            playlist.addRequests = playlist.addRequests.filter((request) => request.id !== requestId);
+            playlist.songIds = playlist.songIds.filter((id) => id !== songId);
 
             playlistMap[this.props.match.params.playlistId] = playlist;
-            this.forceUpdate()
+            this.forceUpdate();
         }
     }
 
@@ -146,6 +148,16 @@ export default class RequestsPage extends React.Component<Props, State> {
         const playlist = playlistMap[this.props.match.params.playlistId];
         const creator = userMap[playlist.creator];
         const songs = playlist.songIds.map(id => songMap[id]);
+
+        // replace instead of push because you can't push the same path
+        const addRequestCallback = () => this.props.history.replace({
+            state: {showAddSong: true}
+        });
+
+        const removeRequestCallback = () => this.props.history.replace({
+            state: {showRemoveSong: true}
+        });
+
         return (
             <Container className="museo-300">
                 <Row className="mt-4">
@@ -161,8 +173,15 @@ export default class RequestsPage extends React.Component<Props, State> {
                     <Col xs={4} className="text-right">
                         {creator.username !== this.props.loggedInUsername && (
                             <div>
-                                <Button variant="outline-primary" className="museo-300 mb-2" onClick={this.toggleAddSong}>Request to add a song</Button><br />
-                                <Button variant="outline-danger" className="museo-300 mb-2" onClick={this.toggleRemoveSong}>Request to remove a song</Button>
+                                <Button variant="outline-primary" className="museo-300 mb-2"
+                                        onClick={this.props.loggedInUsername === undefined ? this.props.toggleLoginModal(addRequestCallback) : this.toggleAddSong}>
+                                    Request to add a song
+                                </Button>
+                                <br />
+                                <Button variant="outline-danger" className="museo-300 mb-2"
+                                        onClick={this.props.loggedInUsername === undefined ? this.props.toggleLoginModal(removeRequestCallback) : this.toggleRemoveSong}>
+                                    Request to remove a song
+                                </Button>
                             </div>
                         )}
                     </Col>
@@ -241,8 +260,8 @@ export default class RequestsPage extends React.Component<Props, State> {
                         {
                             this.state.selectedAddSongId ? (
                                 <Button variant="primary" onClick={() => {
-                                    playlistMap[playlist.id].addRequests.push({ id: "s1234", song: songMap[this.state.selectedAddSongId], usersVoted: ["me"] });
-                                    this.setState({ addSearchQuery: "", addSearchFocused: false, selectedAddSongId: "", showAddSong: false });
+                                    playlistMap[playlist.id].addRequests.push({id: `r${playlistMap[playlist.id].addRequests.length + 1}`, song: songMap[this.state.selectedAddSongId], usersVoted: ["me"]});
+                                    this.setState({addSearchQuery: "", addSearchFocused: false, selectedAddSongId: "", showAddSong: false});
                                 }}>
                                     Request this song
                                 </Button>

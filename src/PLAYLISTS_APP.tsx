@@ -95,8 +95,12 @@ class PLAYLISTS_APP extends React.Component<{}, State> {
                                exact
                         />
                         {/*@ts-ignore */}
-                        <Route path="/playlist/:playlistId/requests" component={({ match, location }) =>
-                                   <RequestsPage loggedInUsername={loggedInUser ? loggedInUser.username : undefined} match={match} location={location} />
+                        <Route path="/playlist/:playlistId/requests" component={({ match, location, history }) =>
+                                   <RequestsPage loggedInUsername={loggedInUser ? loggedInUser.username : undefined}
+                                                 match={match}
+                                                 location={location}
+                                                 history={history}
+                                                 toggleLoginModal={this.handleModalShowHide} />
                                }
                                exact
                         />
