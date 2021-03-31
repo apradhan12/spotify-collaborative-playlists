@@ -6,7 +6,6 @@ import {secondsToMinutesString} from "../../common/utils";
 import {SongRequest} from "../../common/types";
 import "./style.css";
 import { ChangeEvent } from 'react';
-import { Dropdown } from 'react-bootstrap';
 
 interface Props {
     match: {
@@ -60,6 +59,8 @@ class RequestsTable extends Component<RequestsTableProps> {
 interface State {
     showHide: boolean;
     searchQuery: string;
+    selectedSongId: string;
+    searchFocused: boolean;
 }
 
 export default class RequestsPage extends React.Component<Props, State> {
@@ -67,14 +68,16 @@ export default class RequestsPage extends React.Component<Props, State> {
         super(props);
         this.state = {
             showHide: false,
-            searchQuery: ""
+            searchQuery: "",
+            selectedSongId: "",
+            searchFocused: false
         }
         this.handleModalShowHide = this.handleModalShowHide.bind(this);
         this.updateSearchQuery = this.updateSearchQuery.bind(this);
     }
 
     handleModalShowHide() {
-        this.setState(prevState => this.setState({ showHide: !prevState.showHide }));
+        this.setState(prevState => ({ showHide: !prevState.showHide }));
     }
 
     updateSearchQuery(event: ChangeEvent<HTMLInputElement>) {
@@ -114,12 +117,14 @@ export default class RequestsPage extends React.Component<Props, State> {
                     </Col>
                 </Row>
 
-                <Modal show={this.state.showHide} animation={false}>
+                <Modal show={this.state.showHide} animation={false} dialogClassName="larger-width-modal">
                     <Modal.Header onClick={() => this.handleModalShowHide()}>
                         <Modal.Title>Request to add a song</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form>
+                        <Form
+                            onFocus={() => this.setState({searchFocused: true})}
+                        >
                             <FormControl
                                 autoFocus
                                 className="mx-3 my-2 w-auto"
@@ -127,25 +132,64 @@ export default class RequestsPage extends React.Component<Props, State> {
                                 value={this.state.searchQuery}
                                 onChange={this.updateSearchQuery}
                             />
-                            <ul className="list-unstyled">
-                                {
-                                    this.state.searchQuery ?
-                                        Array.from(Object.entries(songMap))
-                                            .filter(([_, song]) => song.title.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
-                                            .map(([_, song]) => <Dropdown.Item>{song.title}</Dropdown.Item>)
-                                        : ""
-                                }
-                            </ul>
+                            {
+                                (this.state.searchQuery && (!this.state.selectedSongId || this.state.searchFocused)) ?
+                                    (
+                                        <Table className="mx-3 w-auto">
+                                            <thead>
+                                            <tr>
+                                                <th>Song</th>
+                                                <th>Artist</th>
+                                                <th>Album</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {
+                                                Array.from(Object.entries(songMap))
+                                                    .filter(([_, song]) =>
+                                                        song.title.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
+                                                    .map(([_, song]) => (
+                                                        <tr className="dropdown-item"
+                                                            role="button"
+                                                            style={{display: "table-row"}}
+                                                            onClick={() => {this.setState({selectedSongId: song.id, searchFocused: false}); console.log(song.title)}}
+                                                        >
+                                                            <td>{song.title}</td>
+                                                            <td>{song.artist}</td>
+                                                            <td>{song.album}</td>
+                                                        </tr>
+                                                    ))
+                                            }
+                                            </tbody>
+                                        </Table>
+                                    )
+                                    : ""
+                            }
+                            {
+                                this.state.selectedSongId ? songMap[this.state.selectedSongId].title : ""
+                            }
+                            {/*<ul className="list-unstyled">*/}
+                            {/*    {*/}
+                            {/*        this.state.searchQuery ?*/}
+                            {/*            Array.from(Object.entries(songMap))*/}
+                            {/*                .filter(([_, song]) => song.title.toLowerCase().includes(this.state.searchQuery.toLowerCase()))*/}
+                            {/*                .map(([_, song]) => <Dropdown.Item>{song.title}</Dropdown.Item>)*/}
+                            {/*            : ""*/}
+                            {/*    }*/}
+                            {/*</ul>*/}
                         </Form>
                     </Modal.Body>
                     <Modal.Footer style={{justifyContent: "flex-start"}}>
-                        <Button variant="secondary" onClick={() => {this.handleModalShowHide(); this.setState({searchQuery: ""})}}>
+                        <Button variant="secondary" onClick={() => {this.setState({searchQuery: "", searchFocused: false, selectedSongId: "", showHide: false})}}>
                             Close this window
                         </Button>
                         {
-                            this.state.searchQuery ? (
-                                <Button variant="primary" onClick={() => this.handleModalShowHide()}>
-                                    Save Changes
+                            this.state.selectedSongId ? (
+                                <Button variant="primary" onClick={() => {
+                                    playlistMap[playlist.id].addRequests.push({id: "s1234", song: songMap[this.state.selectedSongId], usersVoted: ["me"]});
+                                    this.setState({searchQuery: "", searchFocused: false, selectedSongId: "", showHide: false});
+                                }}>
+                                    Request this song
                                 </Button>
                             ) : ""
                         }

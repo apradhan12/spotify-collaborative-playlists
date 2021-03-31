@@ -5,3 +5,7 @@ th.customHeader-1 {
 th.customHeader-2 {
     width: 16.66%;
 }
+
+.larger-width-modal {
+    max-width: 800px;
+}
