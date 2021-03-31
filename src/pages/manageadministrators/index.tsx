@@ -46,8 +46,6 @@ export default class ManageAdmin extends React.Component<Props, State> {
     render() {
         const playlist = playlistMap[this.props.match.params.playlistId];
         const creator = userMap[playlist.creator];
-        const admins = playlist.admins.map(id => userMap[id]);
-
         return (
             <Container className="museo-300">
                 <Row className="my-4">
@@ -63,7 +61,7 @@ export default class ManageAdmin extends React.Component<Props, State> {
                         {playlist.admins.length > 0 && 
                             <ul>
                                 {playlist.admins.map((adminName) => (
-                                    <li>
+                                    <li key={adminName}>
                                         <p className="m-0">{adminName}</p>
                                     </li>
                                 ))}
@@ -84,14 +82,14 @@ export default class ManageAdmin extends React.Component<Props, State> {
                 </Row>
 
                 <Modal show={this.state.showHide} backdrop="static">
-                    <Modal.Header closeButton onClick={() => this.handleModalShowHide()}>
+                    <Modal.Header onClick={() => this.handleModalShowHide()}>
                         <Modal.Title>Add new administrator</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form onFocus={() => this.setState({ searchFocused: true })}>
                             <FormControl autoFocus
                                 className="mx-3 my-2 w-auto"
-                                placeholder="Type to filter..."
+                                placeholder="Type a username..."
                                 value={this.state.searchQuery}
                                 onChange={this.updateSearchQuery} />
                             {
