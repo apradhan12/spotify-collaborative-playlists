@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import {Button, Col, Container, Row, Table} from "react-bootstrap";
+import {Button, Col, Container, Form, FormControl, Modal, Row, Table} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import {playlistMap, userMap} from "../../common/data";
+import {playlistMap, songMap, userMap} from "../../common/data";
 import {secondsToMinutesString} from "../../common/utils";
 import {SongRequest} from "../../common/types";
 import "./style.css";
+import { ChangeEvent } from 'react';
+import { Dropdown } from 'react-bootstrap';
 
 interface Props {
     match: {
@@ -55,7 +57,32 @@ class RequestsTable extends Component<RequestsTableProps> {
     }
 }
 
-export default class RequestsPage extends Component<Props> {
+interface State {
+    showHide: boolean;
+    searchQuery: string;
+}
+
+export default class RequestsPage extends React.Component<Props, State> {
+    constructor(props: Props){
+        super(props);
+        this.state = {
+            showHide: false,
+            searchQuery: ""
+        }
+        this.handleModalShowHide = this.handleModalShowHide.bind(this);
+        this.updateSearchQuery = this.updateSearchQuery.bind(this);
+    }
+
+    handleModalShowHide() {
+        this.setState(prevState => this.setState({ showHide: !prevState.showHide }));
+    }
+
+    updateSearchQuery(event: ChangeEvent<HTMLInputElement>) {
+        this.setState({
+            searchQuery: event.target.value
+        });
+    }
+
     render() {
         const playlist = playlistMap[this.props.match.params.playlistId];
         const creator = userMap[playlist.creator];
@@ -68,9 +95,7 @@ export default class RequestsPage extends Component<Props> {
                         Playlist: <Link to={`/playlist/${playlist.id}`}>{playlist.title}</Link> by <Link to={`/user/${creator.username}`}>{creator.displayName}</Link>
                     </Col>
                     <Col xs={4}>
-                        <Link to={`/playlist/${playlist.id}/requests`}>
-                            <Button className="museo-300 mb-2">Request to add a song</Button><br />
-                        </Link>
+                        <Button className="museo-300 mb-2" onClick={this.handleModalShowHide}>Request to add a song</Button><br />
                         <Link to={`/playlist/${playlist.id}/requests`}>
                             <Button className="museo-300 mb-2">Request to remove a song</Button><br />
                         </Link>
@@ -88,6 +113,44 @@ export default class RequestsPage extends Component<Props> {
                         <RequestsTable requests={playlist.removeRequests} />
                     </Col>
                 </Row>
+
+                <Modal show={this.state.showHide} animation={false}>
+                    <Modal.Header onClick={() => this.handleModalShowHide()}>
+                        <Modal.Title>Request to add a song</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <FormControl
+                                autoFocus
+                                className="mx-3 my-2 w-auto"
+                                placeholder="Type to filter..."
+                                value={this.state.searchQuery}
+                                onChange={this.updateSearchQuery}
+                            />
+                            <ul className="list-unstyled">
+                                {
+                                    this.state.searchQuery ?
+                                        Array.from(Object.entries(songMap))
+                                            .filter(([_, song]) => song.title.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
+                                            .map(([_, song]) => <Dropdown.Item>{song.title}</Dropdown.Item>)
+                                        : ""
+                                }
+                            </ul>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer style={{justifyContent: "flex-start"}}>
+                        <Button variant="secondary" onClick={() => {this.handleModalShowHide(); this.setState({searchQuery: ""})}}>
+                            Close this window
+                        </Button>
+                        {
+                            this.state.searchQuery ? (
+                                <Button variant="primary" onClick={() => this.handleModalShowHide()}>
+                                    Save Changes
+                                </Button>
+                            ) : ""
+                        }
+                    </Modal.Footer>
+                </Modal>
             </Container>
         );
     }
