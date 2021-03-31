@@ -105,7 +105,7 @@ export default class ManageAdmin extends React.Component<Props, State> {
                                                 {
                                                     Array.from(Object.entries(userMap))
                                                         .filter(([_, user]) =>
-                                                            user.username.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
+                                                            user.username.toLowerCase().includes(this.state.searchQuery.toLowerCase()) && !playlist.admins.includes(user.username)) 
                                                         .map(([_, user]) => (
                                                             <tr className="dropdown-item"
                                                                 role="button"
