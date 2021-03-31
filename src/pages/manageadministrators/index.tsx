@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Container, Row, Col, Modal, Form, FormControl } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import {playlistMap, userMap} from "../../data";
+import { playlistMap, userMap } from "../../data";
 
 interface Props {
     match: {
@@ -31,6 +31,7 @@ export default class ManageAdmin extends React.Component<Props, State> {
     render() {
         const playlist = playlistMap[this.props.match.params.playlistId];
         const creator = userMap[playlist.creator];
+        const admins = playlist.admins.map(id => userMap[id]);
 
         return (
             <Container className="museo-300">
@@ -45,17 +46,12 @@ export default class ManageAdmin extends React.Component<Props, State> {
                     <Col xs={12}>
                         <h3 className="museo-display-light">Current Administrators</h3>
                         <ul>
-                            <li>
-                                <p className="m-0">joe-is-cool</p>
-                            </li>
-                            <li>
-                                <p className="m-0">michelle1721</p>
-                            </li>
-                            <li>
-                                <p className="m-0">aaron1200</p>
-                            </li>
-                        </ul>
-
+                            {admins.map(admin => (
+                                <li>
+                                    <p className="m-0">{admin.username}</p>
+                                </li>
+                            ))}
+                            </ul>
                     </Col>
                 </Row>
                 <Row className="mb-2">
@@ -71,17 +67,17 @@ export default class ManageAdmin extends React.Component<Props, State> {
 
                 <Modal show={this.state.showHide}>
                     <Modal.Header closeButton onClick={() => this.handleModalShowHide()}>
-                    <Modal.Title>Add new administrator</Modal.Title>
+                        <Modal.Title>Add new administrator</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                    <Form inline>
-                        <FormControl type="text" placeholder="Type here..." style={{borderRadius: "5px 0px 0px 5px", borderColor: "black"}} />
-                        <Button variant ="secondary" style={{borderRadius: "0px 5px 5px 0px", borderLeft: "none"}}>Search</Button>
-                    </Form>
+                        <Form inline>
+                            <FormControl type="text" placeholder="Type here..." style={{ borderRadius: "5px 0px 0px 5px", borderColor: "black" }} />
+                            <Button variant="secondary" style={{ borderRadius: "0px 5px 5px 0px", borderLeft: "none" }}>Search</Button>
+                        </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                    <Button variant="secondary" onClick={() => this.handleModalShowHide()}>
-                        Close
+                        <Button variant="secondary" onClick={() => this.handleModalShowHide()}>
+                            Add
                     </Button>
                     </Modal.Footer>
                 </Modal>

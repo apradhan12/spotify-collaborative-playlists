@@ -12,7 +12,7 @@ export const playlistMap: PlaylistMap = {
         description: "Best rock songs of the 1960s and 1970s",
         songIds: ["123", "456"],
         creator: "aaron1200",
-        admins: [],
+        admins: ["aaron1200", "joeiscool", "michelle1721"],
         requests: []
     }
 }

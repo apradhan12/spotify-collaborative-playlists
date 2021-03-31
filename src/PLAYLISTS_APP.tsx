@@ -27,7 +27,7 @@ class PLAYLISTS_APP extends React.Component {
                         {/* Route to User profile page */}
                         <Route path="/user/:username" component={UserProfile} exact/>
 
-                        {/* Route to User profile page */}
+                        {/* Route to Manage admins page */}
                         <Route path="/playlist/:playlistId/admins" component={ManageAdmin} exact/>
                     </Router>
                 </Container>

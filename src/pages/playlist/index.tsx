@@ -65,7 +65,7 @@ export default class PlaylistPage extends Component<Props> {
                                         <td>{song.title}</td>
                                         <td>{song.artist}</td>
                                         <td>{song.album}</td>
-                                        <td>never</td>
+                                        <td>3/30/31</td>
                                         <td>{secondsToMinutesString(song.duration)}</td>
                                     </tr>
                                 ))
