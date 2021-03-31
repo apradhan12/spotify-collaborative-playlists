@@ -17,6 +17,30 @@ export const userMap: UserMap = {
         followers: 20,
         following: 31
     },
+    joeiscool: {
+        username: "joeiscool",
+        displayName: "Joe Adams",
+        profilePictureURL: "/album.jpg",
+        playlistIds: [],
+        followers: 39,
+        following: 13
+    },
+    michelle1721: {
+        username: "michelle1721",
+        displayName: "Michelle Thompson",
+        profilePictureURL: "/album.jpg",
+        playlistIds: [],
+        followers: 1203,
+        following: 101
+    },
+    noah2111: {
+        username: "noah2111",
+        displayName: "Noah Smith",
+        profilePictureURL: "/album.jpg",
+        playlistIds: [],
+        followers: 12,
+        following: 11
+    },
     hci2021: {
         username: "hci2021",
         displayName: "HCI Testing Account",
@@ -91,7 +115,7 @@ export const playlistMap: PlaylistMap = {
         description: "Best rock songs of the 1960s and 1970s",
         songIds: ["123", "456"],
         creator: "aaron1200",
-        admins: [],
+        admins: ["aaron1200", "joeiscool", "michelle1721"],
         addRequests: [
             {
                 id: "r1",
