@@ -1,10 +1,12 @@
 import React from 'react'
-import {Navbar, Form, FormControl, Button, Nav} from 'react-bootstrap'
+import {Navbar, Button, Nav} from 'react-bootstrap'
 import PlaylistSearchBar from './PlaylistSearchBar'
 
 interface CustomNavbarProps {
     loggedIn: boolean;
     displayName?: string;
+    username?: string;
+    toggleLoginModal: () => void;
 }
 
 export default class CustomNavbar extends React.Component<CustomNavbarProps> {
@@ -32,10 +34,11 @@ export default class CustomNavbar extends React.Component<CustomNavbarProps> {
                 {
                     this.props.loggedIn ?
                         <Navbar.Text>
-                            Logged in as {this.props.displayName}
+                            Logged in as 
+                            <Nav.Link className="d-inline" href={`#/user/${this.props.username}`}>{this.props.displayName}</Nav.Link>
                         </Navbar.Text> :
-                        <Button variant="light">
-                            Log in with Spotify
+                        <Button variant="light" onClick={this.props.toggleLoginModal}>
+                            Log in
                         </Button>
                 }
             </Navbar>

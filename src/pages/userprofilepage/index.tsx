@@ -2,6 +2,7 @@ import React from 'react'
 import { Col, Container, Row, Image, Table } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { playlistMap, userMap } from "../../common/data";
+import { Playlist } from '../../common/types';
 
 interface Props {
     match: {
@@ -40,12 +41,20 @@ export default class UserProfile extends React.Component<Props> {
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td><Link to="/playlist/abc">60s/70s Rock</Link></td>
-                                <td>2021-03-30</td>
-                                <td>2</td>
-                                <td>9 min</td>
-                            </tr>
+                                {
+                                Array.from(Object.entries(playlistMap))
+                                    .filter(([_, playlist]) => playlist.creator === user.username)
+                                    .map(([_, playlist]) => {
+                                        return (
+                                            <tr>
+                                                <td><Link to={`/playlist/${playlist.id}`}>{playlist.title}</Link></td>
+                                                <td>2021-03-30</td>
+                                                <td>{playlist.songIds.length}</td>
+                                                <td>9 min</td>
+                                            </tr>
+                                        )
+                                    })
+                                }
                             </tbody>
                         </Table>
                     </Col>

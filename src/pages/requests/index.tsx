@@ -7,16 +7,21 @@ import {SongRequest} from "../../common/types";
 import "./style.css";
 import { ChangeEvent } from 'react';
 
+import { Playlist } from '../../common/types'
+
 interface Props {
     match: {
         params: {
             playlistId: string;
         }
-    }
+    },
+    loggedInUsername: string;
 }
 
 interface RequestsTableProps {
     requests: SongRequest[];
+    adminPermissions: boolean;
+    handleAcceptRequest: (songId: string, requestId: string) => () => void;
 }
 
 class RequestsTable extends Component<RequestsTableProps> {
@@ -46,7 +51,8 @@ class RequestsTable extends Component<RequestsTableProps> {
                             <td>2021-03-30</td>
                             <td>{secondsToMinutesString(request.song.duration)}</td>
                             <td>{request.usersVoted.length}</td>
-                            <td><Button variant="outline-primary">Vote for request</Button></td>
+                            { !this.props.adminPermissions && <td><Button variant="outline-primary">Vote for Request</Button></td> }
+                            { this.props.adminPermissions && <td><Button variant="primary" onClick={this.props.handleAcceptRequest(request.song.id, request.id)}>Accept Request</Button></td> }
                         </tr>
                     ))
                 }
@@ -74,6 +80,8 @@ export default class RequestsPage extends React.Component<Props, State> {
         }
         this.handleModalShowHide = this.handleModalShowHide.bind(this);
         this.updateSearchQuery = this.updateSearchQuery.bind(this);
+        this.handleAcceptAddRequest = this.handleAcceptAddRequest.bind(this);
+        this.handleAcceptRemoveRequest = this.handleAcceptRemoveRequest.bind(this)
     }
 
     handleModalShowHide() {
@@ -84,6 +92,28 @@ export default class RequestsPage extends React.Component<Props, State> {
         this.setState({
             searchQuery: event.target.value
         });
+    }
+
+    handleAcceptAddRequest(songId: string, requestId: string) {
+        return () => {
+            let playlist: Playlist = playlistMap[this.props.match.params.playlistId];
+            playlist.addRequests = playlist.addRequests.filter((request) => request.id !== requestId)
+            playlist.songIds = playlist.songIds.concat(songId)
+
+            playlistMap[this.props.match.params.playlistId] = playlist;
+            this.forceUpdate()
+        }
+    }
+
+    handleAcceptRemoveRequest(songId: string, requestId: string) {
+        return () => {
+            let playlist: Playlist = playlistMap[this.props.match.params.playlistId];
+            playlist.addRequests = playlist.addRequests.filter((request) => request.id !== requestId)
+            playlist.songIds = playlist.songIds.filter((id) => id !== songId)
+
+            playlistMap[this.props.match.params.playlistId] = playlist;
+            this.forceUpdate()
+        }
     }
 
     render() {
@@ -102,22 +132,27 @@ export default class RequestsPage extends React.Component<Props, State> {
                         Playlist: <Link to={`/playlist/${playlist.id}`}>{playlist.title}</Link> by <Link to={`/user/${creator.username}`}>{creator.displayName}</Link>
                     </Col>
                     <Col xs={4} className="text-right">
-                        <Button variant="outline-primary" className="museo-300 mb-2" onClick={this.handleModalShowHide}>Request to add a song</Button><br />
-                        <Link to={`/playlist/${playlist.id}/requests`}>
-                            <Button variant="outline-danger" className="museo-300 mb-2">Request to remove a song</Button><br />
-                        </Link>
+                        { creator.username !== this.props.loggedInUsername && (
+                            <div>
+                                <Button variant="outline-primary" className="museo-300 mb-2" onClick={this.handleModalShowHide}>Request to add a song</Button><br />
+                                <Link to={`/playlist/${playlist.id}/requests`}>
+                                    <Button variant="outline-danger" className="museo-300 mb-2">Request to remove a song</Button><br />
+                                </Link>
+                            </div>
+                        )}
+                        
                     </Col>
                 </Row>
                 <Row className="mb-4">
                     <Col>
                         <h2 className="museo-display-light">Add Song Requests</h2>
-                        <RequestsTable requests={playlist.addRequests} />
+                        <RequestsTable handleAcceptRequest={this.handleAcceptAddRequest} adminPermissions={creator.username === this.props.loggedInUsername} requests={playlist.addRequests} />
                     </Col>
                 </Row>
                 <Row className="mb-4">
                     <Col>
                         <h2 className="museo-display-light">Remove Song Requests</h2>
-                        <RequestsTable requests={playlist.removeRequests} />
+                        <RequestsTable handleAcceptRequest={this.handleAcceptRemoveRequest} adminPermissions={creator.username === this.props.loggedInUsername} requests={playlist.removeRequests} />
                     </Col>
                 </Row>
 
@@ -172,15 +207,6 @@ export default class RequestsPage extends React.Component<Props, State> {
                             {
                                 this.state.selectedSongId ? songMap[this.state.selectedSongId].title : ""
                             }
-                            {/*<ul className="list-unstyled">*/}
-                            {/*    {*/}
-                            {/*        this.state.searchQuery ?*/}
-                            {/*            Array.from(Object.entries(songMap))*/}
-                            {/*                .filter(([_, song]) => song.title.toLowerCase().includes(this.state.searchQuery.toLowerCase()))*/}
-                            {/*                .map(([_, song]) => <Dropdown.Item>{song.title}</Dropdown.Item>)*/}
-                            {/*            : ""*/}
-                            {/*    }*/}
-                            {/*</ul>*/}
                         </Form>
                     </Modal.Body>
                     <Modal.Footer style={{justifyContent: "flex-start"}}>
