@@ -1,7 +1,8 @@
 import React from 'react'
-import { Button, Container, Row, Col, Modal } from "react-bootstrap";
+import { Button, Container, Row, Col, Modal, Form, FormControl, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import {playlistMap, userMap} from "../../common/data";
+import { playlistMap, userMap } from "../../common/data";
+import { ChangeEvent } from 'react';
 
 interface Props {
     match: {
@@ -13,25 +14,38 @@ interface Props {
 
 interface State {
     showHide: boolean;
+    searchQuery: string;
+    selectedAdminUsername: string;
+    searchFocused: boolean;
 }
 
 export default class ManageAdmin extends React.Component<Props, State> {
 
-    constructor(props: Props){
+    constructor(props: Props) {
         super(props);
         this.state = {
-            showHide: false
+            showHide: false,
+            searchQuery: "",
+            selectedAdminUsername: "",
+            searchFocused: false
         }
+        this.handleModalShowHide = this.handleModalShowHide.bind(this);
+        this.updateSearchQuery = this.updateSearchQuery.bind(this);
     }
 
     handleModalShowHide() {
         this.setState({ showHide: !this.state.showHide })
     }
 
-    render(){
+    updateSearchQuery(event: ChangeEvent<HTMLInputElement>) {
+        this.setState({
+            searchQuery: event.target.value
+        });
+    }
+
+    render() {
         const playlist = playlistMap[this.props.match.params.playlistId];
         const creator = userMap[playlist.creator];
-
         return (
             <Container className="museo-300">
                 <Row className="my-4">
@@ -47,14 +61,13 @@ export default class ManageAdmin extends React.Component<Props, State> {
                         {playlist.admins.length > 0 && 
                             <ul>
                                 {playlist.admins.map((adminName) => (
-                                    <li>
+                                    <li key={adminName}>
                                         <p className="m-0">{adminName}</p>
                                     </li>
                                 ))}
                             </ul>
                         }
                         {!(playlist.admins.length > 0) && <p>There are no admins for this playlist. Add one to help manage requests.</p>}
-
                     </Col>
                 </Row>
                 <Row className="mb-2">
@@ -69,17 +82,65 @@ export default class ManageAdmin extends React.Component<Props, State> {
                 </Row>
 
                 <Modal show={this.state.showHide} backdrop="static">
-                    <Modal.Header closeButton onClick={() => this.handleModalShowHide()}>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Header onClick={() => this.handleModalShowHide()}>
+                        <Modal.Title>Add new administrator</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-                    <Modal.Footer>
-                    <Button variant="secondary" onClick={() => this.handleModalShowHide()}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={() => this.handleModalShowHide()}>
-                        Save Changes
-                    </Button>
+                    <Modal.Body>
+                        <Form onFocus={() => this.setState({ searchFocused: true })}>
+                            <FormControl autoFocus
+                                className="mx-3 my-2 w-auto"
+                                placeholder="Type a username..."
+                                value={this.state.searchQuery}
+                                onChange={this.updateSearchQuery} />
+                            {
+                                (this.state.searchQuery && (!this.state.selectedAdminUsername || this.state.searchFocused)) ?
+                                    (
+                                        <Table className="mx-3 w-auto">
+                                            <thead>
+                                                <tr>
+                                                    <th>Users</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                    Array.from(Object.entries(userMap))
+                                                        .filter(([_, user]) =>
+                                                            user.username.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
+                                                        .map(([_, user]) => (
+                                                            <tr className="dropdown-item"
+                                                                role="button"
+                                                                style={{ display: "table-row" }}
+                                                                onClick={() => { this.setState({ selectedAdminUsername: user.username, searchFocused: false }); console.log(user.username) }}
+                                                            >
+                                                                <td>{user.username}</td>
+                                                            </tr>
+                                                        ))
+                                                }
+                                            </tbody>
+                                        </Table>
+                                    )
+                                    : ""
+                            }
+                            {
+                                this.state.selectedAdminUsername ? userMap[this.state.selectedAdminUsername].username : ""
+                            }
+                            {/* <Button variant="secondary" style={{ borderRadius: "0px 5px 5px 0px", borderLeft: "none" }}>Search</Button> */}
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer style={{ justifyContent: "flex-start" }}>
+                        <Button variant="secondary" onClick={() => { this.setState({ searchQuery: "", searchFocused: false, selectedAdminUsername: "", showHide: false }) }}>
+                            Close this window
+                        </Button>
+                        {
+                            this.state.selectedAdminUsername ? (
+                                <Button variant="primary" onClick={() => {
+                                    playlistMap[playlist.id].admins.push(userMap[this.state.selectedAdminUsername].username);
+                                    this.setState({searchQuery: "", searchFocused: false, selectedAdminUsername: "", showHide: false});
+                                }}>
+                                    Add Administrator
+                                </Button>
+                            ) : ""
+                        }
                     </Modal.Footer>
                 </Modal>
             </Container>
