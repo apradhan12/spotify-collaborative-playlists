@@ -51,7 +51,7 @@ export default class PlaylistSearchBar extends Component<Props, State>  {
       <Form className="d-flex mx-3" style={{width: "305px"}} onFocus={() => {this.setState({})}}>
         <FormControl
                 autoFocus
-                style={{borderRadius: "5px 0px 0px 5px", borderColor: "black"}}
+                style={{borderRadius: "5px 0px 0px 5px", borderColor: this.props.dark ? "black" : "white"}}
                 placeholder={this.props.placeholder}
                 value={this.state.searchQuery}
                 onChange={this.updateSearchQuery}
