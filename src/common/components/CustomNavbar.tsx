@@ -27,8 +27,8 @@ export default class CustomNavbar extends React.Component<CustomNavbarProps> {
                         Admin
                     </Nav.Link>
                     <Form inline>
-                        <FormControl type="text" placeholder="Type here..." className="mr-sm-2"/>
-                        <Button variant="outline-light">Search</Button>
+                        <FormControl type="text" placeholder="Type here..." style={{borderRadius: "5px 0px 0px 5px", borderColor: "white"}} />
+                        <Button variant="outline-light" style={{borderRadius: "0px 5px 5px 0px", borderLeft: "none"}}>Search</Button>
                     </Form>
                 </Nav>
                 {
