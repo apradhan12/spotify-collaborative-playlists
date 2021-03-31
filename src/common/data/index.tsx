@@ -4,22 +4,6 @@ export interface PlaylistMap {
     [key: string]: Playlist;
 }
 
-<<<<<<< HEAD:src/data/index.tsx
-export const playlistMap: PlaylistMap = {
-    abc: {
-        id: "abc",
-        title: "60s/70s Rock",
-        pictureURL: "/album.jpg",
-        description: "Best rock songs of the 1960s and 1970s",
-        songIds: ["123", "456"],
-        creator: "aaron1200",
-        admins: ["aaron1200", "joeiscool", "michelle1721"],
-        requests: []
-    }
-}
-
-=======
->>>>>>> d59792cb790c3909c20cb8814a92c193b6177a9b:src/common/data/index.tsx
 interface UserMap {
     [key: string]: User;
 }
@@ -102,7 +86,7 @@ export const playlistMap: PlaylistMap = {
         description: "Best rock songs of the 1960s and 1970s",
         songIds: ["123", "456"],
         creator: "aaron1200",
-        admins: [],
+        admins: ["aaron1200", "joeiscool", "michelle1721"],
         addRequests: [
             {
                 id: "r1",
