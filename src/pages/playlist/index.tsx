@@ -1,7 +1,8 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
 import {Button, Col, Container, Row, Table, Image} from "react-bootstrap";
 import {playlistMap, songMap, userMap} from "../../common/data";
 import {secondsToHoursString, secondsToMinutesString, sum} from "../../common/utils";
+import {Link} from "react-router-dom";
 
 interface Props {
     match: {
@@ -22,12 +23,22 @@ export default class PlaylistPage extends Component<Props> {
                     <Col xs={4}>
                         <Image src={process.env.PUBLIC_URL + playlist.pictureURL} alt="Album cover" fluid/>
                     </Col>
-                    <Col xs={8}>
+                    <Col xs={4}>
                         <p className="museo-display-light m-0">Playlist</p>
-
                         <h1 className="museo-display-black">{playlist.title}</h1>
-                        <p className="museo-300">Created by {creator.displayName} &bull; {songs.length} songs, {secondsToHoursString(sum(songs.map(song => song.duration)))}</p>
+                        <p className="museo-300">Created by <Link to={`/user/${creator.username}`}>{creator.displayName}</Link> &bull; {songs.length} songs, {secondsToHoursString(sum(songs.map(song => song.duration)))}</p>
                         <Button className="museo-300">Share</Button>
+                    </Col>
+                    <Col xs={4}>
+                        <Link to={`/playlist/${playlist.id}/requests`}>
+                            <Button className="museo-300 mb-2">Request to add a song</Button><br />
+                        </Link>
+                        <Link to={`/playlist/${playlist.id}/requests`}>
+                            <Button className="museo-300 mb-2">Request to remove a song</Button><br />
+                        </Link>
+                        <Link to={`/playlist/${playlist.id}/requests`}>
+                            <Button className="museo-300 mb-2">View song requests</Button><br />
+                        </Link>
                     </Col>
                 </Row>
                 <Row>
@@ -51,7 +62,7 @@ export default class PlaylistPage extends Component<Props> {
                                         <td>{song.title}</td>
                                         <td>{song.artist}</td>
                                         <td>{song.album}</td>
-                                        <td>never</td>
+                                        <td>2021-03-30</td>
                                         <td>{secondsToMinutesString(song.duration)}</td>
                                     </tr>
                                 ))

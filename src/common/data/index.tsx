@@ -12,7 +12,7 @@ export const userMap: UserMap = {
     aaron1200: {
         username: "aaron1200",
         displayName: "Aaron Pradhan",
-        profilePictureURL: "/album.jpg",
+        profilePictureURL: "/aaron1200.jpg",
         playlistIds: ["abc"],
         followers: 20,
         following: 31

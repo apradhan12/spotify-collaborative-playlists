@@ -42,7 +42,7 @@ class RequestsTable extends Component<RequestsTableProps> {
                             <td>{request.song.title}</td>
                             <td>{request.song.artist}</td>
                             <td>{request.song.album}</td>
-                            <td>never</td>
+                            <td>2021-03-30</td>
                             <td>{secondsToMinutesString(request.song.duration)}</td>
                             <td>{request.usersVoted.length}</td>
                             <td><Button>Vote for request</Button></td>
