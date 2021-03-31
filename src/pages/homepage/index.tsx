@@ -7,7 +7,7 @@ class Homepage extends React.Component {
         return (
             <Container className="museo-300">
                 <Row>
-                    <Col className="text-center d-flex flex-column justify-content-center align-items-center" style={{height: "92vh"}}>
+                    <Col className="text-left d-flex flex-column justify-content-center align-items-center" style={{height: "92vh"}}>
                    
                             <h1 className="museo-display-black">
                                 Spotify Collaborative Playlists
