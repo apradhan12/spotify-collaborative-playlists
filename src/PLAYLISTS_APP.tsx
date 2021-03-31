@@ -21,6 +21,7 @@ interface State {
     loggedInUser: User | null;
     inputUsername: string;
     inputPassword: string;
+    loginCallback?: () => void;
 }
 
 class PLAYLISTS_APP extends React.Component<{}, State> {
@@ -39,9 +40,10 @@ class PLAYLISTS_APP extends React.Component<{}, State> {
         this.handleLoginSubmission = this.handleLoginSubmission.bind(this);
     }
 
-
-    handleModalShowHide(): void {
-        this.setState(prevState => ({ showHide: !prevState.showHide }));
+    handleModalShowHide(callback?: () => void): () => void {
+        return () => {
+            this.setState(prevState => ({ showHide: !prevState.showHide, loginCallback: callback }));
+        };
     }
 
     handleLoginInput(type: 'username' | 'password'): (event: ChangeEvent<HTMLInputElement>) => void {
@@ -59,12 +61,16 @@ class PLAYLISTS_APP extends React.Component<{}, State> {
     handleLoginSubmission(): void {
         if (this.state.inputUsername && this.state.inputPassword) {
             if (this.state.inputPassword.toLowerCase() === "password" && this.state.inputUsername.toLowerCase() === "hci2021") {
+                if (this.state.loginCallback !== undefined) {
+                    this.state.loginCallback();
+                }
                 this.setState({
                     loggedInUser: userMap['hci2021'],
                     showHide: false,
                     inputPassword: "",
-                    inputUsername: ''
-                })
+                    inputUsername: "",
+                    loginCallback: undefined
+                });
             }
         }
     }
@@ -83,9 +89,17 @@ class PLAYLISTS_APP extends React.Component<{}, State> {
                         {/* In order to access this playlist ID from the pages that need it, you need to use props.match.params.<VARIABLE_NAME> in that component */}
 
                         {/*@ts-ignore */}
-                        <Route path="/playlist/:playlistId" component={({ match, location }) => <PlaylistPage loggedInUsername={loggedInUser ? loggedInUser.username : ""} match={match} location={location} />} exact/>
+                        <Route path="/playlist/:playlistId" component={({ match }) =>
+                                   <PlaylistPage loggedInUsername={loggedInUser ? loggedInUser.username : undefined} match={match} toggleLoginModal={this.handleModalShowHide} />
+                               }
+                               exact
+                        />
                         {/*@ts-ignore */}
-                        <Route path="/playlist/:playlistId/requests" component={({ match, location }) => <RequestsPage loggedInUsername={loggedInUser ? loggedInUser.username : ""} match={match} location={location} />} exact/>
+                        <Route path="/playlist/:playlistId/requests" component={({ match, location }) =>
+                                   <RequestsPage loggedInUsername={loggedInUser ? loggedInUser.username : undefined} match={match} location={location} />
+                               }
+                               exact
+                        />
 
                         {/* Route to User profile page */}
                         <Route path="/user/:username" component={UserProfile} exact/>
@@ -114,7 +128,7 @@ class PLAYLISTS_APP extends React.Component<{}, State> {
                         <Button variant="primary" onClick={this.handleLoginSubmission}>
                             Log in
                         </Button>
-                        <Button variant="outline-danger" onClick={() => {this.setState({inputPassword: "", inputUsername: "", showHide: false})}}>
+                        <Button variant="outline-danger" onClick={() => {this.setState({inputPassword: "", inputUsername: "", showHide: false, loginCallback: undefined})}}>
                             Close this window
                         </Button>
                     </Modal.Footer>

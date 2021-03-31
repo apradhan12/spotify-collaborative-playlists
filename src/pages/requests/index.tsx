@@ -61,7 +61,7 @@ interface Props {
     location: {
         state?: LocationState;
     },
-    loggedInUsername: string;
+    loggedInUsername?: string;
 }
 
 interface State {

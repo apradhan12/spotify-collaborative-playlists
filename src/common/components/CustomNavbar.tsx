@@ -5,7 +5,7 @@ import PlaylistSearchBar from './PlaylistSearchBar'
 
 interface CustomNavbarProps {
     user: User | null;
-    toggleLoginModal: () => void;
+    toggleLoginModal: (callback?: () => void) => () => void;
 }
 
 export default class CustomNavbar extends React.Component<CustomNavbarProps> {
@@ -41,7 +41,7 @@ export default class CustomNavbar extends React.Component<CustomNavbarProps> {
                                 </span>
                             </Nav.Link>
                         </Navbar.Text> :
-                        <Button variant="light" onClick={this.props.toggleLoginModal}>
+                        <Button variant="light" onClick={this.props.toggleLoginModal()}>
                             Log in
                         </Button>
                 }
