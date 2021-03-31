@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal } from 'react-bootstrap';
 import { Button, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import {playlistMap, userMap} from "../../data";
+import {playlistMap, userMap} from "../../common/data";
 
 interface Props {
     match: {
@@ -42,7 +42,7 @@ export default class ManageAdmin extends React.Component<Props, State> {
                     <div style={{ fontSize: "48px" }}>Manage Administrators</div>
                 </Row>
                 <Row>
-                    <p>Playlist: <Link to={`/user/${creator.username}`}>{creator.displayName}</Link>'s playlist "{playlist.title}"</p>
+                    <p>Playlist: <Link to={`/playlist/${playlist.id}`}>{playlist.title}</Link> by <Link to={`/user/${creator.username}`}>{creator.displayName}</Link></p>
                 </Row>
                 <Row>
                     <div style={{ fontSize: "28px" }}>Current Administrators</div>

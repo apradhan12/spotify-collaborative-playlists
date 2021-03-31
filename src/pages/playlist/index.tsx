@@ -1,6 +1,7 @@
 import {Component} from 'react';
 import {Button, Col, Container, Row, Table} from "react-bootstrap";
-import {playlistMap, songMap, userMap} from "../../data";
+import {playlistMap, songMap, userMap} from "../../common/data";
+import {secondsToHoursString, secondsToMinutesString, sum} from "../../common/utils";
 
 interface Props {
     match: {
@@ -8,21 +9,6 @@ interface Props {
             playlistId: string;
         }
     }
-}
-
-const SECONDS_PER_MINUTE = 60;
-const MINUTES_PER_HOUR = 60;
-
-function secondsToMinutesString(seconds: number) {
-    return `${Math.floor(seconds / SECONDS_PER_MINUTE)}:${(seconds % SECONDS_PER_MINUTE).toString().padStart(2, "0")}`;
-}
-
-function secondsToHoursString(seconds: number) {
-    return `${Math.floor(seconds / (SECONDS_PER_MINUTE * MINUTES_PER_HOUR))} hr ${(Math.floor(seconds % (SECONDS_PER_MINUTE * MINUTES_PER_HOUR) / SECONDS_PER_MINUTE))} min`;
-}
-
-function sum(nums: number[]) {
-    return nums.reduce((a, b) => a + b, 0)
 }
 
 export default class PlaylistPage extends Component<Props> {

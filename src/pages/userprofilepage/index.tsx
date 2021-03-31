@@ -1,6 +1,6 @@
 import React from 'react'
 import { Col, Container, Row } from "react-bootstrap";
-import {playlistMap, userMap} from "../../data";
+import {playlistMap, userMap} from "../../common/data";
 
 interface Props {
     match: {
