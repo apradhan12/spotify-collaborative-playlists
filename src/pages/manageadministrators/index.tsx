@@ -46,11 +46,11 @@ export default class ManageAdmin extends React.Component<Props, State> {
                         <h3 className="museo-display-light">Current Administrators</h3>
                         {playlist.admins.length > 0 && 
                             <ul>
-                                {playlist.admins.map((adminName) => {
+                                {playlist.admins.map((adminName) => (
                                     <li>
                                         <p className="m-0">{adminName}</p>
                                     </li>
-                                })}
+                                ))}
                             </ul>
                         }
                         {!(playlist.admins.length > 0) && <p>There are no admins for this playlist. Add one to help manage requests.</p>}

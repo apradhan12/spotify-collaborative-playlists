@@ -79,7 +79,7 @@ class PLAYLISTS_APP extends React.Component<{}, State> {
 
         return (
             <div>
-                <CustomNavbar username={loggedInUser ? loggedInUser.username : ""} displayName={loggedInUser ? loggedInUser.displayName : ''} loggedIn={loggedInUser ? true : false} toggleLoginModal={this.handleModalShowHide}/>
+                <CustomNavbar username={loggedInUser ? loggedInUser.username : ""} displayName={loggedInUser ? loggedInUser.displayName : ''} loggedIn={loggedInUser !== null} toggleLoginModal={this.handleModalShowHide}/>
                 <Container fluid>
                     <Router>
                         <Route path="/" component={Homepage} exact/>
@@ -87,9 +87,9 @@ class PLAYLISTS_APP extends React.Component<{}, State> {
                         {/* In order to access this playlist ID from the pages that need it, you need to use props.match.params.<VARIABLE_NAME> in that component */}
 
                         {/*@ts-ignore */}
-                        <Route path="/playlist/:playlistId" component={({ match }) => <PlaylistPage loggedInUsername={loggedInUser ? loggedInUser.username : ""} match={match} />} exact/>
+                        <Route path="/playlist/:playlistId" component={({ match, location }) => <PlaylistPage loggedInUsername={loggedInUser ? loggedInUser.username : ""} match={match} location={location} />} exact/>
                         {/*@ts-ignore */}
-                        <Route path="/playlist/:playlistId/requests" component={({ match }) => <RequestsPage loggedInUsername={loggedInUser ? loggedInUser.username : ""} match={match} />} exact/>
+                        <Route path="/playlist/:playlistId/requests" component={({ match, location }) => <RequestsPage loggedInUsername={loggedInUser ? loggedInUser.username : ""} match={match} location={location} />} exact/>
 
                         {/* Route to User profile page */}
                         <Route path="/user/:username" component={UserProfile} exact/>

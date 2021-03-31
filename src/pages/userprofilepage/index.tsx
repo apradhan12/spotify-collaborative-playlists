@@ -2,7 +2,6 @@ import React from 'react'
 import { Col, Container, Row, Image, Table } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { playlistMap, userMap } from "../../common/data";
-import { Playlist } from '../../common/types';
 
 interface Props {
     match: {
@@ -46,7 +45,7 @@ export default class UserProfile extends React.Component<Props> {
                                     .filter(([_, playlist]) => playlist.creator === user.username)
                                     .map(([_, playlist]) => {
                                         return (
-                                            <tr>
+                                            <tr key={playlist.id}>
                                                 <td><Link to={`/playlist/${playlist.id}`}>{playlist.title}</Link></td>
                                                 <td>2021-03-30</td>
                                                 <td>{playlist.songIds.length}</td>

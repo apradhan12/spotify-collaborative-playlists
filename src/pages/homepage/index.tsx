@@ -3,8 +3,6 @@ import { Col, Container, Row } from 'react-bootstrap';
 import PlaylistSearchBar from '../../common/components/PlaylistSearchBar';
 
 class Homepage extends React.Component {
-
-
     render() {
         return (
             <Container className="museo-300">
