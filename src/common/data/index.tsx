@@ -28,7 +28,7 @@ export const userMap: UserMap = {
     michelle1721: {
         username: "michelle1721",
         displayName: "Michelle Thompson",
-        profilePictureURL: "/album.jpg",
+        profilePictureURL: "/dan1.jpg",
         playlistIds: [],
         followers: 1203,
         following: 101
@@ -36,7 +36,7 @@ export const userMap: UserMap = {
     noah2111: {
         username: "noah2111",
         displayName: "Noah Smith",
-        profilePictureURL: "/album.jpg",
+        profilePictureURL: "/drh1.jpg",
         playlistIds: [],
         followers: 12,
         following: 11
@@ -44,7 +44,7 @@ export const userMap: UserMap = {
     hci2021: {
         username: "hci2021",
         displayName: "HCI Testing Account",
-        profilePictureURL: "/aaron1200.jpg",
+        profilePictureURL: "/chw.jpg",
         playlistIds: [],
         followers: 12,
         following: 42
@@ -104,6 +104,20 @@ export const songMap: SongMap = {
         artist: "Point Point",
         album: "Contrastive Focus Reduplication",
         duration: 224
+    },
+    "s6" : {
+        id: "s6",
+        title: "Let it Be",
+        artist: "The Beatles",
+        album: "Let it Be",
+        duration: 243
+    },
+    "s7" : {
+        id: "s7",
+        title: "Baby",
+        artist: "Justin Bieber",
+        album: "My World 2.0",
+        duration: 215
     }
 }
 
@@ -113,9 +127,9 @@ export const playlistMap: PlaylistMap = {
         title: "60s/70s Rock",
         pictureURL: "/album.jpg",
         description: "Best rock songs of the 1960s and 1970s",
-        songIds: ["123", "456"],
+        songIds: ["123", "456", "s7"],
         creator: "aaron1200",
-        admins: ["aaron1200", "joeiscool", "michelle1721"],
+        admins: ["joeiscool", "michelle1721"],
         addRequests: [
             {
                 id: "r1",
@@ -139,11 +153,11 @@ export const playlistMap: PlaylistMap = {
     def: {
         id: "def",
         title: "Hype EDM",
-        pictureURL: "/album.jpg",
+        pictureURL: "/bike.jpg",
         description: "Big bass drops and crazy synths",
         songIds: ["s3"],
         creator: "hci2021",
-        admins: [],
+        admins: ["joeiscool", "michelle1721"],
         addRequests: [
             {
                 id: "r1",
