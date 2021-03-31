@@ -17,7 +17,7 @@ interface State {
 
 export default class ManageAdmin extends React.Component<Props, State> {
 
-    constructor(props: Props){
+    constructor(props: Props) {
         super(props);
         this.state = {
             showHide: false
@@ -28,7 +28,7 @@ export default class ManageAdmin extends React.Component<Props, State> {
         this.setState({ showHide: !this.state.showHide })
     }
 
-    render(){
+    render() {
         const playlist = playlistMap[this.props.match.params.playlistId];
         const creator = userMap[playlist.creator];
 
