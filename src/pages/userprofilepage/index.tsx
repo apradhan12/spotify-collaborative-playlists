@@ -1,6 +1,7 @@
 import React from 'react'
 import { Col, Container, Row, Image, Table } from "react-bootstrap";
-import {playlistMap, userMap} from "../../data";
+import { Link } from 'react-router-dom';
+import { playlistMap, userMap } from "../../common/data";
 
 interface Props {
     match: {
@@ -18,10 +19,10 @@ export default class UserProfile extends React.Component<Props> {
             <Container className="museo-300">
                 <Row className="my-4">
                     <Col xs={4}>
-                        <Image src="https://picsum.photos/200/300" fluid alt={`${user.displayName}'s profile`} />
+                        <Image src={process.env.PUBLIC_URL + user.profilePictureURL} alt={`${user.displayName}'s profile`} fluid />
                     </Col>
                     <Col xs={8}>
-                        <h1 className="museo-display-black">{user.username}</h1>
+                        <h1 className="museo-display-black">{user.displayName}</h1>
                         <p className="m-0">{user.followers} followers</p>
                         <p>{playlists.length} playlists</p>
                     </Col>
@@ -39,10 +40,12 @@ export default class UserProfile extends React.Component<Props> {
                             </tr>
                             </thead>
                             <tbody>
-                                <td><a href="#playlist/abc">60s/70s Rock</a></td>
-                                <td>3/30/21</td>
+                            <tr>
+                                <td><Link to="/playlist/abc">60s/70s Rock</Link></td>
+                                <td>2021-03-30</td>
                                 <td>2</td>
                                 <td>9 min</td>
+                            </tr>
                             </tbody>
                         </Table>
                     </Col>

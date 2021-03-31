@@ -1,9 +1,10 @@
-import {Playlist, Song, User} from "../common/types";
+import {Playlist, Song, User} from "../types";
 
 export interface PlaylistMap {
     [key: string]: Playlist;
 }
 
+<<<<<<< HEAD:src/data/index.tsx
 export const playlistMap: PlaylistMap = {
     abc: {
         id: "abc",
@@ -17,6 +18,8 @@ export const playlistMap: PlaylistMap = {
     }
 }
 
+=======
+>>>>>>> d59792cb790c3909c20cb8814a92c193b6177a9b:src/common/data/index.tsx
 interface UserMap {
     [key: string]: User;
 }
@@ -25,7 +28,7 @@ export const userMap: UserMap = {
     aaron1200: {
         username: "aaron1200",
         displayName: "Aaron Pradhan",
-        profilePictureURL: "/album.jpg",
+        profilePictureURL: "/aaron1200.jpg",
         playlistIds: ["abc"],
         followers: 20,
         following: 31
@@ -74,5 +77,50 @@ export const songMap: SongMap = {
         artist: "Queen",
         album: "Jazz",
         duration: 209
+    },
+    "s1": {
+        id: "s1",
+        title: "Get Back",
+        artist: "The Beatles",
+        album: "Let It Be",
+        duration: 187
+    },
+    "s2": {
+        id: "s2",
+        title: "Revolution",
+        artist: "The Beatles",
+        album: "The Beatles 1967 - 1970",
+        duration: 205
+    }
+}
+
+export const playlistMap: PlaylistMap = {
+    abc: {
+        id: "abc",
+        title: "60s/70s Rock",
+        pictureURL: "/album.jpg",
+        description: "Best rock songs of the 1960s and 1970s",
+        songIds: ["123", "456"],
+        creator: "aaron1200",
+        admins: [],
+        addRequests: [
+            {
+                id: "r1",
+                song: songMap["s1"],
+                usersVoted: ["jack1298", "carol1522", "hd123", "bigdolphin"]
+            },
+            {
+                id: "r2",
+                song: songMap["s2"],
+                usersVoted: ["jack1298", "carol1522", "hd123"]
+            }
+        ],
+        removeRequests: [
+            {
+                id: "r1",
+                song: songMap["456"],
+                usersVoted: ["jack1298", "carol1522", "hd123"]
+            }
+        ]
     }
 }
