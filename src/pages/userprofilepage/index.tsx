@@ -40,10 +40,12 @@ export default class UserProfile extends React.Component<Props> {
                             </tr>
                             </thead>
                             <tbody>
+                            <tr>
                                 <td><Link to="/playlist/abc">60s/70s Rock</Link></td>
                                 <td>2021-03-30</td>
                                 <td>2</td>
                                 <td>9 min</td>
+                            </tr>
                             </tbody>
                         </Table>
                     </Col>

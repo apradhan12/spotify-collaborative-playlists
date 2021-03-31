@@ -61,11 +61,19 @@ export default class RequestsPage extends Component<Props> {
         const creator = userMap[playlist.creator];
         return (
             <Container>
-                <Row>
-                    <Col>
+                <Row className="my-4">
+                    <Col xs={8}>
                         <Link to={`/playlist/${playlist.id}`}>&#8592; Go back to playlist</Link><br />
                         <h1>Song Requests</h1>
                         Playlist: <Link to={`/playlist/${playlist.id}`}>{playlist.title}</Link> by <Link to={`/user/${creator.username}`}>{creator.displayName}</Link>
+                    </Col>
+                    <Col xs={4}>
+                        <Link to={`/playlist/${playlist.id}/requests`}>
+                            <Button className="museo-300 mb-2">Request to add a song</Button><br />
+                        </Link>
+                        <Link to={`/playlist/${playlist.id}/requests`}>
+                            <Button className="museo-300 mb-2">Request to remove a song</Button><br />
+                        </Link>
                     </Col>
                 </Row>
                 <Row>

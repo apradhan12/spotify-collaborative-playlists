@@ -57,7 +57,7 @@ export default class PlaylistPage extends Component<Props> {
                             <tbody>
                             {
                                 Array.from(songs.entries()).map(([i, song]) => (
-                                    <tr>
+                                    <tr key={song.id}>
                                         <td>{i + 1}</td>
                                         <td>{song.title}</td>
                                         <td>{song.artist}</td>
