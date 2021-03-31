@@ -29,6 +29,30 @@ export const userMap: UserMap = {
         playlistIds: ["abc"],
         followers: 20,
         following: 31
+    },
+    joeiscool: {
+        username: "joeiscool",
+        displayName: "Joe Adams",
+        profilePictureURL: "/album.jpg",
+        playlistIds: [],
+        followers: 39,
+        following: 13
+    },
+    michelle1721: {
+        username: "michelle1721",
+        displayName: "Michelle Thompson",
+        profilePictureURL: "/album.jpg",
+        playlistIds: [],
+        followers: 1203,
+        following: 101
+    },
+    noah2111: {
+        username: "noah2111",
+        displayName: "Noah Smith",
+        profilePictureURL: "/album.jpg",
+        playlistIds: [],
+        followers: 12,
+        following: 11
     }
 }
 

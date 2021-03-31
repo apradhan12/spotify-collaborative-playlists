@@ -18,7 +18,7 @@ export default class CustomNavbar extends React.Component<CustomNavbarProps> {
                         Requests
                     </Nav.Link>
                     <Nav.Link href="#playlist/abc">
-                        playlist
+                        Playlist
                     </Nav.Link>
                     <Nav.Link href="#user/aaron1200">
                         User

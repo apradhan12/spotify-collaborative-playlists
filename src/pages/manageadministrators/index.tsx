@@ -1,9 +1,5 @@
 import React from 'react'
-<<<<<<< HEAD
-import { Button, Container, Row, Col, Modal } from "react-bootstrap";
-=======
-import { Modal, Button, Container, Row } from "react-bootstrap";
->>>>>>> Fix modal
+import { Button, Container, Row, Col, Modal, Form, FormControl } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {playlistMap, userMap} from "../../data";
 
@@ -75,15 +71,17 @@ export default class ManageAdmin extends React.Component<Props, State> {
 
                 <Modal show={this.state.showHide}>
                     <Modal.Header closeButton onClick={() => this.handleModalShowHide()}>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>Add new administrator</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                    <Modal.Body>
+                    <Form inline>
+                        <FormControl type="text" placeholder="Type here..." style={{borderRadius: "5px 0px 0px 5px", borderColor: "black"}} />
+                        <Button variant ="secondary" style={{borderRadius: "0px 5px 5px 0px", borderLeft: "none"}}>Search</Button>
+                    </Form>
+                    </Modal.Body>
                     <Modal.Footer>
                     <Button variant="secondary" onClick={() => this.handleModalShowHide()}>
                         Close
-                    </Button>
-                    <Button variant="primary" onClick={() => this.handleModalShowHide()}>
-                        Save Changes
                     </Button>
                     </Modal.Footer>
                 </Modal>
