@@ -10,7 +10,6 @@ interface Props {
 
 interface State {
   searchQuery: string;
-  selectedPlaylistId: string;
   searchFocused: boolean;
 }
 
@@ -21,12 +20,10 @@ export default class PlaylistSearchBar extends Component<Props, State>  {
 
     this.state = {
       searchQuery: "",
-      selectedPlaylistId: "",
       searchFocused: false
     }
 
     this.updateSearchQuery = this.updateSearchQuery.bind(this);
-    this.navigateToSelectedPlaylist = this.navigateToSelectedPlaylist.bind(this);
   }
 
   updateSearchQuery(event: ChangeEvent<HTMLInputElement>) {
@@ -34,30 +31,19 @@ export default class PlaylistSearchBar extends Component<Props, State>  {
         searchQuery: event.target.value
     });
   }
-  
-  navigateToSelectedPlaylist() {
-    if (this.state.selectedPlaylistId) {
-      window.location.href = `#/playlist/${this.state.selectedPlaylistId}`
-      this.setState({
-        searchQuery: "",
-        selectedPlaylistId: "",
-      })
-    }
-   
-  }
 
   render() {
     return (
       <Form className="d-flex mx-3" style={{width: "305px"}} onFocus={() => {this.setState({})}}>
         <FormControl
                 autoFocus
-                style={{borderRadius: "5px 0px 0px 5px", borderColor: this.props.dark ? "black" : "white"}}
+                style={{borderColor: this.props.dark ? "black" : "white"}}
                 placeholder={this.props.placeholder}
                 value={this.state.searchQuery}
                 onChange={this.updateSearchQuery}
             />
             {
-                (this.state.searchQuery && (!this.state.selectedPlaylistId || this.state.searchFocused)) ?
+                this.state.searchQuery ?
                     (
                         <Table className="w-auto" style={{position: "fixed", backgroundColor: "white", marginTop: "35px", zIndex: 1000, border: "lightgray 2px solid", borderRadius: "0px 0px 5px 5px"}}>
                             <thead>
@@ -75,7 +61,10 @@ export default class PlaylistSearchBar extends Component<Props, State>  {
                                         <tr className="dropdown-item"
                                             role="button"
                                             style={{display: "table-row"}}
-                                            onClick={() => { this.setState({selectedPlaylistId: playlist.id, searchFocused: false, searchQuery: playlist.title}); }}
+                                            onClick={() => { 
+                                              window.location.href = `#/playlist/${playlist.id}`
+                                              this.setState({searchFocused: false, searchQuery: ""}); 
+                                            }}
                                         >
                                             <td>{playlist.title}</td>
                                             <td>{playlist.creator}</td>
@@ -87,7 +76,6 @@ export default class PlaylistSearchBar extends Component<Props, State>  {
                     )
                     : ""
             }
-        <Button onClick={this.navigateToSelectedPlaylist} variant={this.props.dark ? "outline-dark" : "outline-light"} style={{borderRadius: "0px 5px 5px 0px", borderLeft: "none", height: "98%"}}>Search</Button>
     </Form>
     )
   }
