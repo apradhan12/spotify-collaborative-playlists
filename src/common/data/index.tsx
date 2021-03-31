@@ -40,6 +40,14 @@ export const userMap: UserMap = {
         playlistIds: [],
         followers: 12,
         following: 11
+    },
+    hci2021: {
+        username: "hci2021",
+        displayName: "HCI Testing Account",
+        profilePictureURL: "/aaron1200.jpg",
+        playlistIds: [],
+        followers: 12,
+        following: 42
     }
 }
 
@@ -75,6 +83,27 @@ export const songMap: SongMap = {
         artist: "The Beatles",
         album: "The Beatles 1967 - 1970",
         duration: 205
+    },
+    "s3" : {
+        id: "s3",
+        title: "Bangarang",
+        artist: "Skrillex",
+        album: "Bang!",
+        duration: 181
+    },
+    "s4" : {
+        id: "s4",
+        title: "Hero",
+        artist: "Pegboard Nerds",
+        album: "Hero",
+        duration: 222
+    },
+    "s5" : {
+        id: "s5",
+        title: "Life in Grey",
+        artist: "Point Point",
+        album: "Contrastive Focus Reduplication",
+        duration: 224
     }
 }
 
@@ -106,5 +135,27 @@ export const playlistMap: PlaylistMap = {
                 usersVoted: ["jack1298", "carol1522", "hd123"]
             }
         ]
+    },
+    def: {
+        id: "def",
+        title: "Hype EDM",
+        pictureURL: "/album.jpg",
+        description: "Big bass drops and crazy synths",
+        songIds: ["s3"],
+        creator: "hci2021",
+        admins: [],
+        addRequests: [
+            {
+                id: "r1",
+                song: songMap["s4"],
+                usersVoted: ["jack1298", "carol1522", "hd123", "bigdolphin"]
+            },
+            {
+                id: "r2",
+                song: songMap["s5"],
+                usersVoted: ["jack1298", "carol1522", "hd123"]
+            }
+        ],
+        removeRequests: []
     }
 }

@@ -9,7 +9,8 @@ interface Props {
         params: {
             playlistId: string;
         }
-    }
+    },
+    loggedInUsername: string;
 }
 
 export default class PlaylistPage extends Component<Props> {
@@ -30,15 +31,36 @@ export default class PlaylistPage extends Component<Props> {
                         <Button variant="outline-primary" className="museo-300">Share</Button>
                     </Col>
                     <Col xs={4} className="text-right">
-                        <Link to={`/playlist/${playlist.id}/requests`}>
-                            <Button variant="outline-primary" className="museo-300 mb-2">Request to add a song</Button><br />
-                        </Link>
-                        <Link to={`/playlist/${playlist.id}/requests`}>
-                            <Button variant="outline-danger" className="museo-300 mb-2">Request to remove a song</Button><br />
-                        </Link>
-                        <Link to={`/playlist/${playlist.id}/requests`}>
-                            <Button variant="outline-secondary" className="museo-300 mb-2">View song requests</Button><br />
-                        </Link>
+                        { (creator.username !== this.props.loggedInUsername) && (  
+                            <div>
+                                <Link to={{
+                                    pathname: `/playlist/${playlist.id}/requests`,
+                                    state: {showAddSong: true}
+                                }}>
+                                    <Button variant="outline-primary" className="museo-300 mb-2">Request to add a song</Button><br />
+                                </Link>
+                                <Link to={{
+                                    pathname: `/playlist/${playlist.id}/requests`,
+                                    state: {showRemoveSong: true}
+                                }}>
+                                    <Button variant="outline-danger" className="museo-300 mb-2">Request to remove a song</Button><br />
+                                </Link>
+                                <Link to={`/playlist/${playlist.id}/requests`}>
+                                    <Button variant="outline-secondary" className="museo-300 mb-2">View song requests</Button><br />
+                                </Link>
+                            </div>
+                        )}
+
+                        { (creator.username === this.props.loggedInUsername) && (  
+                            <div>
+                                <Link to={`/playlist/${playlist.id}/requests`}>
+                                    <Button variant="outline-secondary" className="museo-300 mb-2">Manage Song Requests</Button><br />
+                                </Link>
+                                <Link to={`/playlist/${playlist.id}/admins`}>
+                                    <Button variant="outline-secondary" className="museo-300 mb-2">Manage Administrators</Button><br />
+                                </Link>
+                            </div>
+                        )}
                     </Col>
                 </Row>
                 <Row>

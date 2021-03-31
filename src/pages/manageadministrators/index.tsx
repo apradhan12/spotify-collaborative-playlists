@@ -60,13 +60,16 @@ export default class ManageAdmin extends React.Component<Props, State> {
                 <Row className="mb-4">
                     <Col xs={12}>
                         <h3 className="museo-display-light">Current Administrators</h3>
-                        <ul>
-                            {admins.map(admin => (
-                                <li>
-                                    <p className="m-0">{admin.username}</p>
-                                </li>
-                            ))}
-                        </ul>
+                        {playlist.admins.length > 0 && 
+                            <ul>
+                                {playlist.admins.map((adminName) => (
+                                    <li>
+                                        <p className="m-0">{adminName}</p>
+                                    </li>
+                                ))}
+                            </ul>
+                        }
+                        {!(playlist.admins.length > 0) && <p>There are no admins for this playlist. Add one to help manage requests.</p>}
                     </Col>
                 </Row>
                 <Row className="mb-2">
@@ -80,7 +83,7 @@ export default class ManageAdmin extends React.Component<Props, State> {
                     </Col>
                 </Row>
 
-                <Modal show={this.state.showHide}>
+                <Modal show={this.state.showHide} backdrop="static">
                     <Modal.Header closeButton onClick={() => this.handleModalShowHide()}>
                         <Modal.Title>Add new administrator</Modal.Title>
                     </Modal.Header>
