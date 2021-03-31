@@ -41,7 +41,7 @@ class RequestsTable extends Component<RequestsTableProps> {
                             <td>2021-03-30</td>
                             <td>{secondsToMinutesString(request.song.duration)}</td>
                             <td>{request.usersVoted.length}</td>
-                            { !this.props.adminPermissions && <td><Button variant="outline-primary">Vote for Request</Button></td> }
+                            { !this.props.adminPermissions && <td><Button variant="outline-secondary">Vote for Request</Button></td> }
                             { this.props.adminPermissions && <td><Button variant="primary" onClick={this.props.handleAcceptRequest(request.song.id, request.id)}>Accept Request</Button></td> }
                         </tr>
                     ))
@@ -180,17 +180,17 @@ export default class RequestsPage extends React.Component<Props, State> {
                     </Col>
                 </Row>
 
-                <Modal show={this.state.showAddSong} animation={false} dialogClassName="larger-width-modal" backdrop="static">
+                <Modal show={this.state.showAddSong} animation={false} dialogClassName="larger-width-modal museo-300" backdrop="static">
                     <Modal.Header>
-                        <Modal.Title>Request to add a song</Modal.Title>
+                        <Modal.Title className="museo-display-black">Request to add a song</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
+                    <Modal.Body className="px-3">
                         <Form
                             onFocus={() => this.setState({addSearchFocused: true})}
                         >
                             <FormControl
                                 autoFocus
-                                className="mx-3 my-2 w-auto"
+                                className="my-2 w-auto"
                                 placeholder="Type the song title here..."
                                 value={this.state.addSearchQuery}
                                 onChange={this.updateSearchQuery}
@@ -251,12 +251,12 @@ export default class RequestsPage extends React.Component<Props, State> {
                     </Modal.Footer>
                 </Modal>
 
-                <Modal show={this.state.showRemoveSong} animation={false} dialogClassName="larger-width-modal" backdrop="static">
+                <Modal show={this.state.showRemoveSong} animation={false} dialogClassName="larger-width-modal museo-300" backdrop="static">
                     <Modal.Header>
-                        <Modal.Title>Request to remove a song</Modal.Title>
+                        <Modal.Title className="museo-display-black">Request to remove a song</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Table striped bordered hover className="museo-300">
+                        <Table striped bordered hover>
                             <thead>
                             <tr>
                                 {
@@ -303,7 +303,7 @@ export default class RequestsPage extends React.Component<Props, State> {
                         </Table>
                     </Modal.Body>
                     <Modal.Footer style={{justifyContent: "flex-start"}}>
-                        <Button variant="outline-primary" onClick={this.toggleRemoveSong}>
+                        <Button variant="secondary" onClick={this.toggleRemoveSong}>
                             Finish requesting song removals
                         </Button>
                     </Modal.Footer>

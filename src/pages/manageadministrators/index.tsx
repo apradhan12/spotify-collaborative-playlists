@@ -81,9 +81,9 @@ export default class ManageAdmin extends React.Component<Props, State> {
                     </Col>
                 </Row>
 
-                <Modal show={this.state.showHide} backdrop="static">
+                <Modal show={this.state.showHide} backdrop="static" dialogClassName="museo-300">
                     <Modal.Header onClick={() => this.handleModalShowHide()}>
-                        <Modal.Title>Add new administrator</Modal.Title>
+                        <Modal.Title className="museo-display-black">Add new Administrator</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form onFocus={() => this.setState({ searchFocused: true })}>

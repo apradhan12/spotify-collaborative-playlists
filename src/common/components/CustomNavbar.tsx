@@ -34,10 +34,10 @@ export default class CustomNavbar extends React.Component<CustomNavbarProps> {
                     this.props.user ?
                         <Navbar.Text>
                             Logged in as 
-                            <Nav.Link className="d-inline" href={`#/user/${this.props.user.username}`}>
+                            <Nav.Link className="d-inline p-0 ml-2" href={`#/user/${this.props.user.username}`}>
                                 <span>
-                                    <Image fluid src={process.env.PUBLIC_URL + this.props.user.profilePictureURL} style={{maxWidth: "30px", marginRight: "5px"}} />
                                     {this.props.user.displayName}
+                                    <Image fluid src={process.env.PUBLIC_URL + this.props.user.profilePictureURL} style={{maxWidth: "30px", marginLeft: "5px"}} />
                                 </span>
                             </Nav.Link>
                         </Navbar.Text> :
