@@ -75,7 +75,7 @@ class PLAYLISTS_APP extends React.Component<{}, State> {
 
         return (
             <div>
-                <CustomNavbar username={loggedInUser ? loggedInUser.username : ""} displayName={loggedInUser ? loggedInUser.displayName : ''} loggedIn={loggedInUser !== null} toggleLoginModal={this.handleModalShowHide}/>
+                <CustomNavbar user={loggedInUser} toggleLoginModal={this.handleModalShowHide}/>
                 <Container fluid>
                     <Router>
                         <Route path="/" component={Homepage} exact/>

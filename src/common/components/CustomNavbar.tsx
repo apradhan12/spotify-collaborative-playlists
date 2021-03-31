@@ -1,11 +1,10 @@
 import React from 'react'
-import {Navbar, Button, Nav} from 'react-bootstrap'
+import {Navbar, Button, Nav, Image} from 'react-bootstrap'
+import { User } from '../types'
 import PlaylistSearchBar from './PlaylistSearchBar'
 
 interface CustomNavbarProps {
-    loggedIn: boolean;
-    displayName?: string;
-    username?: string;
+    user: User | null;
     toggleLoginModal: () => void;
 }
 
@@ -32,10 +31,15 @@ export default class CustomNavbar extends React.Component<CustomNavbarProps> {
                 </Nav>
                 <PlaylistSearchBar placeholder="Search for playlists..." />
                 {
-                    this.props.loggedIn ?
+                    this.props.user ?
                         <Navbar.Text>
                             Logged in as 
-                            <Nav.Link className="d-inline" href={`#/user/${this.props.username}`}>{this.props.displayName}</Nav.Link>
+                            <Nav.Link className="d-inline" href={`#/user/${this.props.user.username}`}>
+                                <span>
+                                    <Image fluid src={process.env.PUBLIC_URL + this.props.user.profilePictureURL} style={{maxWidth: "30px", marginRight: "5px"}} />
+                                    {this.props.user.displayName}
+                                </span>
+                            </Nav.Link>
                         </Navbar.Text> :
                         <Button variant="light" onClick={this.props.toggleLoginModal}>
                             Log in
