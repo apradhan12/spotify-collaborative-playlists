@@ -16,20 +16,20 @@ export default class CustomNavbar extends React.Component<CustomNavbarProps> {
                     <p className="museo-display-black m-0">Spotify Collaborative Playlists</p>
                 </Navbar.Brand>
                 <Nav className="mr-auto">
-                    <Nav.Link href="#playlist/abc/requests">
-                        Requests
-                    </Nav.Link>
-                    <Nav.Link href="#playlist/abc">
-                        Playlist
-                    </Nav.Link>
-                    <Nav.Link href="#user/aaron1200">
-                        User
-                    </Nav.Link>
-                    <Nav.Link href="#playlist/abc/admins">
-                        Admin
-                    </Nav.Link>
+                    <PlaylistSearchBar placeholder="Search for playlists..."/>
+                    {/*<Nav.Link href="#playlist/abc/requests">*/}
+                    {/*    Requests*/}
+                    {/*</Nav.Link>*/}
+                    {/*<Nav.Link href="#playlist/abc">*/}
+                    {/*    Playlist*/}
+                    {/*</Nav.Link>*/}
+                    {/*<Nav.Link href="#user/aaron1200">*/}
+                    {/*    User*/}
+                    {/*</Nav.Link>*/}
+                    {/*<Nav.Link href="#playlist/abc/admins">*/}
+                    {/*    Admin*/}
+                    {/*</Nav.Link>*/}
                 </Nav>
-                <PlaylistSearchBar placeholder="Search for playlists..."/>
                 {
                     this.props.user ?
                         <>
