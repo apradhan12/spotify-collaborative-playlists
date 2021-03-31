@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Container, Row, Col, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import {playlistMap, userMap} from "../../data";
+import {playlistMap, userMap} from "../../common/data";
 
 interface Props {
     match: {
@@ -38,7 +38,7 @@ export default class ManageAdmin extends React.Component<Props, State> {
                     <Col xs={12}>
                         <Link to={`/playlist/${playlist.id}`}>&#8592; Go back to playlist</Link>
                         <h1 className="museo-display-black">Manage Administrators</h1>
-                        <p>Playlist: <Link to={`/user/${creator.username}`}>{creator.displayName}</Link>'s playlist "{playlist.title}"</p>
+                        <p>Playlist: <Link to={`/playlist/${playlist.id}`}>{playlist.title}</Link> by <Link to={`/user/${creator.username}`}>{creator.displayName}</Link></p>
                     </Col>
                 </Row>
                 <Row className="mb-4">
