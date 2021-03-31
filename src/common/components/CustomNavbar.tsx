@@ -1,5 +1,6 @@
 import React from 'react'
 import {Navbar, Form, FormControl, Button, Nav} from 'react-bootstrap'
+import PlaylistSearchBar from './PlaylistSearchBar'
 
 interface CustomNavbarProps {
     loggedIn: boolean;
@@ -26,17 +27,14 @@ export default class CustomNavbar extends React.Component<CustomNavbarProps> {
                     <Nav.Link href="#playlist/abc/admins">
                         Admin
                     </Nav.Link>
-                    <Form inline>
-                        <FormControl type="text" placeholder="Type here..." style={{borderRadius: "5px 0px 0px 5px", borderColor: "white"}} />
-                        <Button variant="outline-light" style={{borderRadius: "0px 5px 5px 0px", borderLeft: "none"}}>Search</Button>
-                    </Form>
                 </Nav>
+                <PlaylistSearchBar placeholder="Search for playlists..." />
                 {
                     this.props.loggedIn ?
                         <Navbar.Text>
                             Logged in as {this.props.displayName}
                         </Navbar.Text> :
-                        <Button variant="outline-light">
+                        <Button variant="light">
                             Log in with Spotify
                         </Button>
                 }

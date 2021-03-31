@@ -46,7 +46,7 @@ class RequestsTable extends Component<RequestsTableProps> {
                             <td>2021-03-30</td>
                             <td>{secondsToMinutesString(request.song.duration)}</td>
                             <td>{request.usersVoted.length}</td>
-                            <td><Button>Vote for request</Button></td>
+                            <td><Button variant="outline-primary">Vote for request</Button></td>
                         </tr>
                     ))
                 }
@@ -90,29 +90,33 @@ export default class RequestsPage extends React.Component<Props, State> {
         const playlist = playlistMap[this.props.match.params.playlistId];
         const creator = userMap[playlist.creator];
         return (
-            <Container>
-                <Row className="my-4">
-                    <Col xs={8}>
-                        <Link to={`/playlist/${playlist.id}`}>&#8592; Go back to playlist</Link><br />
-                        <h1>Song Requests</h1>
+            <Container className="museo-300">
+                <Row className="mt-4">
+                    <Col xs={12}>
+                        <Link to={`/playlist/${playlist.id}`}>&#8592; Go back to playlist</Link>
+                    </Col>
+                </Row>
+                <Row className="mb-4">
+                    <Col xs={8}>  
+                        <h1 className="museo-display-black">Song Requests</h1>
                         Playlist: <Link to={`/playlist/${playlist.id}`}>{playlist.title}</Link> by <Link to={`/user/${creator.username}`}>{creator.displayName}</Link>
                     </Col>
-                    <Col xs={4}>
-                        <Button className="museo-300 mb-2" onClick={this.handleModalShowHide}>Request to add a song</Button><br />
+                    <Col xs={4} className="text-right">
+                        <Button variant="outline-primary" className="museo-300 mb-2" onClick={this.handleModalShowHide}>Request to add a song</Button><br />
                         <Link to={`/playlist/${playlist.id}/requests`}>
-                            <Button className="museo-300 mb-2">Request to remove a song</Button><br />
+                            <Button variant="outline-danger" className="museo-300 mb-2">Request to remove a song</Button><br />
                         </Link>
                     </Col>
                 </Row>
-                <Row>
+                <Row className="mb-4">
                     <Col>
-                        <h2>Requests to add songs</h2>
+                        <h2 className="museo-display-light">Add Song Requests</h2>
                         <RequestsTable requests={playlist.addRequests} />
                     </Col>
                 </Row>
-                <Row>
+                <Row className="mb-4">
                     <Col>
-                        <h2>Requests to remove songs</h2>
+                        <h2 className="museo-display-light">Remove Song Requests</h2>
                         <RequestsTable requests={playlist.removeRequests} />
                     </Col>
                 </Row>
