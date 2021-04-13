@@ -127,7 +127,7 @@ export default class ManageAdmin extends React.Component<Props, State> {
                             {/* <Button variant="secondary" style={{ borderRadius: "0px 5px 5px 0px", borderLeft: "none" }}>Search</Button> */}
                         </Form>
                     </Modal.Body>
-                    <Modal.Footer style={{ justifyContent: "flex-start" }}>
+                    <Modal.Footer style={{ justifyContent: "flex-end" }}>
                         <Button variant="secondary" onClick={() => { this.setState({ searchQuery: "", searchFocused: false, selectedAdminUsername: "", showHide: false }) }}>
                             Close this window
                         </Button>
