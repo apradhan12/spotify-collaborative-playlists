@@ -253,7 +253,7 @@ export default class RequestsPage extends React.Component<Props, State> {
                             }
                         </Form>
                     </Modal.Body>
-                    <Modal.Footer style={{ justifyContent: "flex-start" }}>
+                    <Modal.Footer style={{ justifyContent: "flex-end" }}>
                         <Button variant="outline-secondary" onClick={this.toggleAddSong}>
                             Close this window
                         </Button>
@@ -321,7 +321,7 @@ export default class RequestsPage extends React.Component<Props, State> {
                             </tbody>
                         </Table>
                     </Modal.Body>
-                    <Modal.Footer style={{ justifyContent: "flex-start" }}>
+                    <Modal.Footer style={{ justifyContent: "flex-end" }}>
                         <Button variant="primary" onClick={() => {
                             this.state.removeSongIds.forEach(element => {
                                 playlistMap[playlist.id].removeRequests.push({ id: "s1234", song: songMap[element], usersVoted: ["me"] });

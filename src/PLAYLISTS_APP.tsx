@@ -112,9 +112,9 @@ class PLAYLISTS_APP extends React.Component<{}, State> {
                         <Route path="/playlist/:playlistId/admins" component={ManageAdmin} exact/>
                     </Router>
 
-                    <Modal show={this.state.showHide} animation={false} backdrop="static">
+                    <Modal show={this.state.showHide} animation={false} backdrop="static" dialogClassName="museo-300">
                     <Modal.Header onClick={() => this.handleModalShowHide()}>
-                        <Modal.Title>Log into your account</Modal.Title>
+                        <Modal.Title className="museo-display-black">Log into your account</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form>
@@ -128,7 +128,7 @@ class PLAYLISTS_APP extends React.Component<{}, State> {
                             </Form.Group>
                         </Form>
                     </Modal.Body>
-                    <Modal.Footer style={{justifyContent: "flex-start"}}>
+                    <Modal.Footer style={{justifyContent: "flex-end"}}>
                         <Button variant="primary" onClick={this.handleLoginSubmission}>
                             Log in
                         </Button>

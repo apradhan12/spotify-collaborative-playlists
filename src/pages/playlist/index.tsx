@@ -41,8 +41,9 @@ export default function PlaylistPage(props: Props) {
                 <Col xs={4}>
                     <p className="museo-display-light m-0">Playlist</p>
                     <h1 className="museo-display-black">{playlist.title}</h1>
-                    <p className="museo-300">Created by <Link to={`/user/${creator.username}`}>{creator.displayName}</Link> &bull; {songs.length} songs, {secondsToHoursString(sum(songs.map(song => song.duration)))}</p>
-                    <Button variant="outline-secondary" className="museo-300">Share</Button>
+                    <p className="museo-300 mb-0">Created by <Link to={`/user/${creator.username}`}>{creator.displayName}</Link></p>
+                    <p className="museo-300 italic">{songs.length} {songs.length === 1 ? "song" : "songs"}, {secondsToHoursString(sum(songs.map(song => song.duration)))}</p>
+                    <Button variant="outline-dark" className="museo-300">Share</Button>
                 </Col>
                 <Col xs={4} className="text-right">
                     { (creator.username !== props.loggedInUsername) && (
