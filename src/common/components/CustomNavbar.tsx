@@ -33,9 +33,9 @@ export default class CustomNavbar extends React.Component<CustomNavbarProps> {
                 {
                     this.props.user ?
                         <>
-                            <Navbar.Text>
+                            <Navbar.Text >
                                 Logged in as
-                                <Nav.Link className="d-inline p-0 ml-2" href={`#/user/${this.props.user.username}`}>
+                                <Nav.Link className="d-inline p-0 ml-2" href={`#/user/${this.props.user.username}`} style={{textDecorationLine: "underline"}} >
                                 <span>
                                     {this.props.user.displayName}
                                     <Image fluid src={process.env.PUBLIC_URL + this.props.user.profilePictureURL}
@@ -46,10 +46,11 @@ export default class CustomNavbar extends React.Component<CustomNavbarProps> {
                             <Button variant="light" className="ml-5" onClick={() => window.location.reload()}>Log out</Button>
                         </> :
                         <Button variant="light" onClick={this.props.toggleLoginModal()}>
-                            Log in
+                            Log in with Spotify
                         </Button>
                 }
             </Navbar>
         )
     }
 }
+

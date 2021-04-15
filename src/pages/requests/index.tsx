@@ -223,6 +223,7 @@ export default class RequestsPage extends React.Component<Props, State> {
                                                     <th>Song</th>
                                                     <th>Artist</th>
                                                     <th>Album</th>
+                                                    <th>Duration</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -240,6 +241,7 @@ export default class RequestsPage extends React.Component<Props, State> {
                                                                 <td>{song.title}</td>
                                                                 <td>{song.artist}</td>
                                                                 <td>{song.album}</td>
+                                                                <td>{secondsToMinutesString(song.duration)}</td>
                                                             </tr>
                                                         ))
                                                 }
@@ -255,7 +257,7 @@ export default class RequestsPage extends React.Component<Props, State> {
                     </Modal.Body>
                     <Modal.Footer style={{ justifyContent: "flex-end" }}>
                         <Button variant="outline-secondary" onClick={this.toggleAddSong}>
-                            Close this window
+                            Cancel and Close
                         </Button>
                         {
                             this.state.selectedAddSongId ? (
