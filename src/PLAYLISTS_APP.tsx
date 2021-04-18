@@ -22,6 +22,7 @@ interface State {
     inputUsername: string;
     inputPassword: string;
     loginCallback?: () => void;
+    error: "username" | "password" | "not-filled" | "";
 }
 
 class PLAYLISTS_APP extends React.Component<{}, State> {
@@ -33,7 +34,8 @@ class PLAYLISTS_APP extends React.Component<{}, State> {
             showHide: false,
             loggedInUser: null,
             inputUsername: "",
-            inputPassword: ""
+            inputPassword: "",
+            error: ""
         }
 
         this.handleModalShowHide = this.handleModalShowHide.bind(this);
@@ -49,11 +51,11 @@ class PLAYLISTS_APP extends React.Component<{}, State> {
     handleLoginInput(type: 'username' | 'password'): (event: ChangeEvent<HTMLInputElement>) => void {
         if (type === "username") {
             return (event: ChangeEvent<HTMLInputElement>) => {
-                this.setState({inputUsername: event.target.value})
+                this.setState({inputUsername: event.target.value, error: ""})
             }
         } else {
             return (event: ChangeEvent<HTMLInputElement>) => {
-                this.setState({inputPassword: event.target.value})
+                this.setState({inputPassword: event.target.value, error: ""})
             }
         }
     }
@@ -71,7 +73,24 @@ class PLAYLISTS_APP extends React.Component<{}, State> {
                     inputUsername: "",
                     loginCallback: undefined
                 });
+            } else {
+                if (this.state.inputUsername.toLowerCase() !== "hci2021") {
+                    this.setState({
+                        inputPassword: "",
+                        inputUsername: "",
+                        error: "username"
+                    })
+                } else {
+                    this.setState({
+                        inputPassword: "",
+                        error: "password"
+                    })
+                }
             }
+        } else {
+            this.setState({
+                error: "not-filled"
+            })
         }
     }
 
@@ -120,12 +139,25 @@ class PLAYLISTS_APP extends React.Component<{}, State> {
                         <Form>
                             <Form.Group controlId="formUsername">
                                 <Form.Label>Username</Form.Label>
-                                <Form.Control type="text" placeholder="Enter username..." value={this.state.inputUsername} onChange={this.handleLoginInput('username')} />
+                                <Form.Control type="text" placeholder="Enter username..." value={this.state.inputUsername} onChange={this.handleLoginInput('username')} isInvalid={this.state.error === "username"} />
+                                <Form.Control.Feedback type="invalid">
+                                    Username not found, please try again.
+                                </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group controlId="formPassword">
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Enter password..." value={this.state.inputPassword} onChange={this.handleLoginInput('password')} />
+                                <Form.Control type="password" placeholder="Enter password..." value={this.state.inputPassword} onChange={this.handleLoginInput('password')} isInvalid={this.state.error === "password"} />
+                                <Form.Control.Feedback type="invalid">
+                                    Incorrect password, please try again.
+                                </Form.Control.Feedback>
                             </Form.Group>
+                            {
+                                (this.state.error === "not-filled") 
+                                    && 
+                                <p className="text-danger" style={{fontSize: "80%", marginBottom: 0}}>
+                                    Please fill out all login fields.
+                                </p>
+                            }
                         </Form>
                     </Modal.Body>
                     <Modal.Footer style={{justifyContent: "flex-end"}}>
