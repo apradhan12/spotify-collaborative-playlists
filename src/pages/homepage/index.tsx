@@ -31,7 +31,8 @@ class Homepage extends React.Component {
                                     <Link to={`/playlist/${playlist.id}`} key={playlist.id}>
                                         <div style={{boxShadow: "1px 1px 10px gray", padding: ".75em", borderRadius: "10px", height: "100%"}}> 
                                             <Image className="mb-3" fluid src={process.env.PUBLIC_URL + playlist.pictureURL} />
-                                            <p className="mb-1">{playlist.title}</p>
+                                            <p className="mb-1 museo-700">{playlist.title}</p>
+                                            <p className="mb-1">{playlist.creator}</p>
                                             <p className="mb-1">{playlist.songIds.length} {playlist.songIds.length === 1 ? "song" : "songs"}</p>
                                         </div>
                                     </Link>
