@@ -20,7 +20,7 @@ export const userMap: UserMap = {
     joeiscool: {
         username: "joeiscool",
         displayName: "Joe Adams",
-        profilePictureURL: "/album.jpg",
+        profilePictureURL: "/joe.jpg",
         playlistIds: [],
         followers: 39,
         following: 13
@@ -28,7 +28,7 @@ export const userMap: UserMap = {
     michelle1721: {
         username: "michelle1721",
         displayName: "Michelle Thompson",
-        profilePictureURL: "/dan1.jpg",
+        profilePictureURL: "/michelle.jpg",
         playlistIds: [],
         followers: 1203,
         following: 101
@@ -36,7 +36,7 @@ export const userMap: UserMap = {
     noah2111: {
         username: "noah2111",
         displayName: "Noah Smith",
-        profilePictureURL: "/drh1.jpg",
+        profilePictureURL: "/noah.jpg",
         playlistIds: [],
         followers: 12,
         following: 11
@@ -44,7 +44,7 @@ export const userMap: UserMap = {
     hci2021: {
         username: "hci2021",
         displayName: "HCI Testing Account",
-        profilePictureURL: "/chw.jpg",
+        profilePictureURL: "/hci.jpg",
         playlistIds: [],
         followers: 12,
         following: 42
@@ -118,6 +118,20 @@ export const songMap: SongMap = {
         artist: "Justin Bieber",
         album: "My World 2.0",
         duration: 215
+    },
+    "s8": {
+        id: "s8",
+        title: "Sonata Pathetique: Movement 1",
+        artist: "Ludwig van Beethoven",
+        album: "Beethoven: Piano Sonatas",
+        duration: 400
+    },
+    "s9": {
+        id: "s9",
+        title: "Take Five",
+        artist: "The Dave Brubeck Quartet",
+        album: "Time Out",
+        duration: 324
     }
 }
 
@@ -170,6 +184,28 @@ export const playlistMap: PlaylistMap = {
                 usersVoted: ["jack1298", "carol1522", "hd123"]
             }
         ],
+        removeRequests: []
+    },
+    classical: {
+        id: "classical",
+        title: "Classical music for studying",
+        pictureURL: "/classical.jpg",
+        description: "Relaxing classical music for studying - no lyrics",
+        songIds: ["s8"],
+        creator: "joeiscool",
+        admins: [],
+        addRequests: [],
+        removeRequests: []
+    },
+    jazz: {
+        id: "jazz",
+        title: "Smooth Jazz",
+        pictureURL: "/jazz.jpg",
+        description: "Warm jazz for cool nights",
+        songIds: ["s9"],
+        creator: "michelle1721",
+        admins: [],
+        addRequests: [],
         removeRequests: []
     }
 }
