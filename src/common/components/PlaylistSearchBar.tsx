@@ -33,6 +33,11 @@ export default class PlaylistSearchBar extends Component<Props, State>  {
   }
 
   render() {
+
+   let results = Array.from(Object.entries(playlistMap))
+                      .filter(([_, playlist]) =>
+                          playlist.title.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
+
     return (
       <Form className="d-flex mx-3" style={{width: "305px"}} onFocus={() => {this.setState({})}}>
         <FormControl
@@ -45,7 +50,7 @@ export default class PlaylistSearchBar extends Component<Props, State>  {
             {
                 this.state.searchQuery ?
                     (
-                        <Table className="w-auto" style={{position: "fixed", backgroundColor: "white", marginTop: "35px", zIndex: 1000, border: "lightgray 2px solid", borderRadius: "0px 0px 5px 5px"}}>
+                        <Table className="w-auto" style={{position: "absolute", backgroundColor: "white", marginTop: "35px", zIndex: 1000, border: "lightgray 2px solid", borderRadius: "0px 0px 5px 5px"}}>
                             <thead>
                             <tr>
                                 <th>Title</th>
@@ -53,11 +58,19 @@ export default class PlaylistSearchBar extends Component<Props, State>  {
                             </tr>
                             </thead>
                             <tbody>
+                            { results.length === 0 && 
+                                <tr>
+                                  <td>
+                                    <span style={{color: 'gray'}}>Nothing found.</span>
+                                  </td>
+                                  <td>
+                                    
+                                  </td>
+                                </tr> 
+                            }
+
                             {
-                                Array.from(Object.entries(playlistMap))
-                                    .filter(([_, playlist]) =>
-                                        playlist.title.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
-                                    .map(([_, playlist]) => (
+                                results.map(([_, playlist]) => (
                                         <tr className="dropdown-item"
                                             role="button"
                                             style={{display: "table-row"}}

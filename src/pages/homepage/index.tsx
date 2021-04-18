@@ -27,8 +27,8 @@ class Homepage extends React.Component {
                         .slice(0, 4)
                         .map(([_, playlist]) => {
                             return (   
-                                <Col xs="3" style={{padding: ".5em"}}>
-                                    <Link to={`/playlist/${playlist.id}`} key={playlist.id}>
+                                <Col xs="3" style={{padding: ".5em"}} key={playlist.id}>
+                                    <Link to={`/playlist/${playlist.id}`}>
                                         <div style={{boxShadow: "1px 1px 10px gray", padding: ".75em", borderRadius: "10px", height: "100%"}}> 
                                             <Image className="mb-3" fluid src={process.env.PUBLIC_URL + playlist.pictureURL} />
                                             <p className="mb-1 museo-700">{playlist.title}</p>

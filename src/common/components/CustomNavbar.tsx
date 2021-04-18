@@ -8,7 +8,29 @@ interface CustomNavbarProps {
     toggleLoginModal: (callback?: () => void) => () => void;
 }
 
-export default class CustomNavbar extends React.Component<CustomNavbarProps> {
+interface CustomNavbarState {
+    hash: string;
+}
+
+export default class CustomNavbar extends React.Component<CustomNavbarProps, CustomNavbarState> {
+
+    constructor(props: CustomNavbarProps) {
+        super(props);
+
+        this.state = {
+            hash: window.location.hash
+        }
+    }
+
+    componentDidMount() {
+        window.addEventListener('hashchange', () => {
+            this.setState({
+                hash: window.location.hash
+            })
+        })
+    }
+
+
     render() {
         return (
             <Navbar style={{backgroundColor: "#6eaedd"}} variant="dark" className="museo-300">
@@ -16,7 +38,7 @@ export default class CustomNavbar extends React.Component<CustomNavbarProps> {
                     <p className="museo-display-black m-0">Spotify Collaborative Playlists</p>
                 </Navbar.Brand>
                 <Nav className="mr-auto">
-                    {window.location.hash != "#/" && <PlaylistSearchBar placeholder="Search for playlists..."/>}
+                    {this.state.hash !== "#/" && <PlaylistSearchBar placeholder="Search for playlists..."/>}
                 </Nav>
                 {
                     this.props.user ?
