@@ -158,6 +158,15 @@ export default class RequestsPage extends React.Component<Props, State> {
             state: {showRemoveSong: true}
         });
 
+        const finishRequestingSongRemovals = () => {
+            this.state.removeSongIds.forEach(element => {
+                // todo fix s1234 repeated key
+                playlistMap[playlist.id].removeRequests.push({id: "s1234", song: songMap[element], usersVoted: ["me"]});
+            });
+            this.setState({addSearchQuery: "", addSearchFocused: false, removeSongIds: [], showAddSong: false});
+            this.toggleRemoveSong();
+        };
+
         return (
             <Container className="museo-300">
                 <Row className="mt-4">
@@ -324,14 +333,7 @@ export default class RequestsPage extends React.Component<Props, State> {
                         </Table>
                     </Modal.Body>
                     <Modal.Footer style={{ justifyContent: "flex-end" }}>
-                        <Button variant="primary" onClick={() => {
-                            this.state.removeSongIds.forEach(element => {
-                                playlistMap[playlist.id].removeRequests.push({ id: "s1234", song: songMap[element], usersVoted: ["me"] });
-                            this.setState({ addSearchQuery: "", addSearchFocused: false, removeSongIds: [], showAddSong: false });
-                            this.toggleRemoveSong()
-                            });
-                            
-                        }}>
+                        <Button variant="primary" onClick={finishRequestingSongRemovals}>
                             Finish requesting song removals
                         </Button>
                     </Modal.Footer>
