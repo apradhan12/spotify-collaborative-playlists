@@ -12,6 +12,8 @@ interface RequestsTableProps {
     requests: SongRequest[];
     adminPermissions: boolean;
     handleAcceptRequest: (songId: string, requestId: string) => () => void;
+    removeVote: (requestId: string) => () => void;
+    addVote: (requestId: string) => () => void;
 }
 
 class RequestsTable extends Component<RequestsTableProps> {
@@ -46,8 +48,10 @@ class RequestsTable extends Component<RequestsTableProps> {
                                                                            onClick={this.props.handleAcceptRequest(request.song.id, request.id)}>Accept
                                             Request</Button> :
                                         (request.usersVoted.includes("hci2021") ?
-                                            <Button variant="outline-secondary">Remove Vote for Request</Button> :
-                                            <Button variant="outline-secondary">Vote for Request</Button>)
+                                            <Button variant="outline-secondary" onClick={this.props.removeVote(request.id)}>
+                                                Remove Vote for Request
+                                            </Button> :
+                                            <Button variant="outline-secondary" onClick={this.props.addVote(request.id)}>Vote for Request</Button>)
                                     }
                                 </td>
                             </tr>
@@ -113,6 +117,8 @@ export default class RequestsPage extends React.Component<Props, State> {
         this.updateSearchQuery = this.updateSearchQuery.bind(this);
         this.handleAcceptAddRequest = this.handleAcceptAddRequest.bind(this);
         this.handleAcceptRemoveRequest = this.handleAcceptRemoveRequest.bind(this);
+        this.removeVote = this.removeVote.bind(this);
+        this.addVote = this.addVote.bind(this);
     }
 
     toggleAddSong() {
@@ -121,6 +127,36 @@ export default class RequestsPage extends React.Component<Props, State> {
 
     toggleRemoveSong() {
         this.setState(prevState => ({ removeSongIds: [], showRemoveSong: !prevState.showRemoveSong }));
+    }
+
+    removeVote(isAddRequest: boolean) {
+        return (requestId: string) => () => {
+            let requestList;
+            if (isAddRequest) {
+                requestList = playlistMap[this.props.match.params.playlistId].addRequests;
+            } else {
+                requestList = playlistMap[this.props.match.params.playlistId].removeRequests;
+            }
+            const request = requestList.find(request => request.id === requestId);
+            if (request !== undefined) {
+                request.usersVoted = request.usersVoted.filter(user => user !== "hci2021");
+            }
+        };
+    }
+
+    addVote(isAddRequest: boolean) {
+        return (requestId: string) => () => {
+            let requestList;
+            if (isAddRequest) {
+                requestList = playlistMap[this.props.match.params.playlistId].addRequests;
+            } else {
+                requestList = playlistMap[this.props.match.params.playlistId].removeRequests;
+            }
+            const request = requestList.find(request => request.id === requestId);
+            if (request !== undefined && !request.usersVoted.includes("hci2021")) {
+                request.usersVoted.push("hci2021");
+            }
+        }
     }
 
     updateSearchQuery(event: ChangeEvent<HTMLInputElement>) {
@@ -205,13 +241,23 @@ export default class RequestsPage extends React.Component<Props, State> {
                 <Row className="mb-4">
                     <Col>
                         <h2 className="museo-display-light">Add Song Requests</h2>
-                        <RequestsTable handleAcceptRequest={this.handleAcceptAddRequest} adminPermissions={creator.username === this.props.loggedInUsername} requests={playlist.addRequests} />
+                        <RequestsTable handleAcceptRequest={this.handleAcceptAddRequest}
+                                       adminPermissions={creator.username === this.props.loggedInUsername}
+                                       requests={playlist.addRequests}
+                                       removeVote={this.removeVote(true)}
+                                       addVote={this.addVote(true)}
+                        />
                     </Col>
                 </Row>
                 <Row className="mb-4">
                     <Col>
                         <h2 className="museo-display-light">Remove Song Requests</h2>
-                        <RequestsTable handleAcceptRequest={this.handleAcceptRemoveRequest} adminPermissions={creator.username === this.props.loggedInUsername} requests={playlist.removeRequests} />
+                        <RequestsTable handleAcceptRequest={this.handleAcceptRemoveRequest}
+                                       adminPermissions={creator.username === this.props.loggedInUsername}
+                                       requests={playlist.removeRequests}
+                                       removeVote={this.removeVote(false)}
+                                       addVote={this.addVote(false)}
+                        />
                     </Col>
                 </Row>
 
