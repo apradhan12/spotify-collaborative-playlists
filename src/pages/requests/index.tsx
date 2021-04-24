@@ -41,8 +41,15 @@ class RequestsTable extends Component<RequestsTableProps> {
                                 <td>2021-03-30</td>
                                 <td>{secondsToMinutesString(request.song.duration)}</td>
                                 <td>{request.usersVoted.length}</td>
-                                {!this.props.adminPermissions && <td><Button variant="outline-secondary">Vote for Request</Button></td>}
-                                {this.props.adminPermissions && <td><Button variant="primary" onClick={this.props.handleAcceptRequest(request.song.id, request.id)}>Accept Request</Button></td>}
+                                <td>
+                                    {this.props.adminPermissions ? <Button variant="primary"
+                                                                           onClick={this.props.handleAcceptRequest(request.song.id, request.id)}>Accept
+                                            Request</Button> :
+                                        (request.usersVoted.includes("hci2021") ?
+                                            <Button variant="outline-secondary">Remove Vote for Request</Button> :
+                                            <Button variant="outline-secondary">Vote for Request</Button>)
+                                    }
+                                </td>
                             </tr>
                         ))
                     }
@@ -161,7 +168,7 @@ export default class RequestsPage extends React.Component<Props, State> {
         const finishRequestingSongRemovals = () => {
             this.state.removeSongIds.forEach(element => {
                 // todo fix s1234 repeated key
-                playlistMap[playlist.id].removeRequests.push({id: "s1234", song: songMap[element], usersVoted: ["me"]});
+                playlistMap[playlist.id].removeRequests.push({id: `r${playlistMap[playlist.id].removeRequests.length + 1}`, song: songMap[element], usersVoted: ["hci2021"]});
             });
             this.setState({addSearchQuery: "", addSearchFocused: false, removeSongIds: [], showAddSong: false});
             this.toggleRemoveSong();
@@ -271,7 +278,7 @@ export default class RequestsPage extends React.Component<Props, State> {
                         {
                             this.state.selectedAddSongId ? (
                                 <Button variant="primary" onClick={() => {
-                                    playlistMap[playlist.id].addRequests.push({id: `r${playlistMap[playlist.id].addRequests.length + 1}`, song: songMap[this.state.selectedAddSongId], usersVoted: ["me"]});
+                                    playlistMap[playlist.id].addRequests.push({id: `r${playlistMap[playlist.id].addRequests.length + 1}`, song: songMap[this.state.selectedAddSongId], usersVoted: ["hci2021"]});
                                     this.setState({addSearchQuery: "", addSearchFocused: false, selectedAddSongId: "", showAddSong: false});
                                 }}>
                                     Request this song
