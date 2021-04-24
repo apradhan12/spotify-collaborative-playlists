@@ -14,6 +14,8 @@ interface RequestsTableProps {
     handleAcceptRequest: (songId: string, requestId: string) => () => void;
     removeVote: (requestId: string) => () => void;
     addVote: (requestId: string) => () => void;
+    loggedInUsername?: string;
+    toggleLoginModal: (callback?: () => void) => () => void;
 }
 
 class RequestsTable extends Component<RequestsTableProps> {
@@ -47,11 +49,15 @@ class RequestsTable extends Component<RequestsTableProps> {
                                     {this.props.adminPermissions ? <Button variant="primary"
                                                                            onClick={this.props.handleAcceptRequest(request.song.id, request.id)}>Accept
                                             Request</Button> :
-                                        (request.usersVoted.includes("hci2021") ?
+                                        (this.props.loggedInUsername !== undefined && request.usersVoted.includes(this.props.loggedInUsername) ?
                                             <Button variant="outline-secondary" onClick={this.props.removeVote(request.id)}>
                                                 Remove Vote for Request
                                             </Button> :
-                                            <Button variant="outline-secondary" onClick={this.props.addVote(request.id)}>Vote for Request</Button>)
+                                            <Button variant="outline-secondary"
+                                                    onClick={this.props.loggedInUsername === undefined ? this.props.toggleLoginModal(this.props.addVote(request.id)) : this.props.addVote(request.id) }
+                                            >
+                                                Vote for Request
+                                            </Button>)
                                     }
                                 </td>
                             </tr>
@@ -131,30 +137,36 @@ export default class RequestsPage extends React.Component<Props, State> {
 
     removeVote(isAddRequest: boolean) {
         return (requestId: string) => () => {
-            let requestList;
-            if (isAddRequest) {
-                requestList = playlistMap[this.props.match.params.playlistId].addRequests;
-            } else {
-                requestList = playlistMap[this.props.match.params.playlistId].removeRequests;
-            }
-            const request = requestList.find(request => request.id === requestId);
-            if (request !== undefined) {
-                request.usersVoted = request.usersVoted.filter(user => user !== "hci2021");
+            if (this.props.loggedInUsername !== undefined) {
+                let requestList;
+                if (isAddRequest) {
+                    requestList = playlistMap[this.props.match.params.playlistId].addRequests;
+                } else {
+                    requestList = playlistMap[this.props.match.params.playlistId].removeRequests;
+                }
+                const request = requestList.find(request => request.id === requestId);
+                if (request !== undefined) {
+                    request.usersVoted = request.usersVoted.filter(user => user !== "hci2021");
+                    this.forceUpdate();
+                }
             }
         };
     }
 
     addVote(isAddRequest: boolean) {
         return (requestId: string) => () => {
-            let requestList;
-            if (isAddRequest) {
-                requestList = playlistMap[this.props.match.params.playlistId].addRequests;
-            } else {
-                requestList = playlistMap[this.props.match.params.playlistId].removeRequests;
-            }
-            const request = requestList.find(request => request.id === requestId);
-            if (request !== undefined && !request.usersVoted.includes("hci2021")) {
-                request.usersVoted.push("hci2021");
+            if (this.props.loggedInUsername !== undefined) {
+                let requestList;
+                if (isAddRequest) {
+                    requestList = playlistMap[this.props.match.params.playlistId].addRequests;
+                } else {
+                    requestList = playlistMap[this.props.match.params.playlistId].removeRequests;
+                }
+                const request = requestList.find(request => request.id === requestId);
+                if (request !== undefined && !request.usersVoted.includes("hci2021")) {
+                    request.usersVoted.push("hci2021");
+                    this.forceUpdate();
+                }
             }
         }
     }
@@ -246,6 +258,8 @@ export default class RequestsPage extends React.Component<Props, State> {
                                        requests={playlist.addRequests}
                                        removeVote={this.removeVote(true)}
                                        addVote={this.addVote(true)}
+                                       loggedInUsername={this.props.loggedInUsername}
+                                       toggleLoginModal={this.props.toggleLoginModal}
                         />
                     </Col>
                 </Row>
@@ -257,6 +271,8 @@ export default class RequestsPage extends React.Component<Props, State> {
                                        requests={playlist.removeRequests}
                                        removeVote={this.removeVote(false)}
                                        addVote={this.addVote(false)}
+                                       loggedInUsername={this.props.loggedInUsername}
+                                       toggleLoginModal={this.props.toggleLoginModal}
                         />
                     </Col>
                 </Row>
