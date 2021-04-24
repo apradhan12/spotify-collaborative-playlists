@@ -2,7 +2,7 @@ import React from 'react'
 import { Col, Container, Row, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PlaylistSearchBar from '../../common/components/PlaylistSearchBar';
-import { playlistMap } from '../../common/data';
+import {playlistMap, userMap} from '../../common/data';
 
 class Homepage extends React.Component {
     render() {
@@ -32,7 +32,7 @@ class Homepage extends React.Component {
                                         <div style={{boxShadow: "1px 1px 10px gray", padding: ".75em", borderRadius: "10px", height: "100%"}}> 
                                             <Image className="mb-3" fluid src={process.env.PUBLIC_URL + playlist.pictureURL} />
                                             <p className="mb-1 museo-700">{playlist.title}</p>
-                                            <p className="mb-1">{playlist.creator}</p>
+                                            <p className="mb-1">{userMap[playlist.creator].displayName}</p>
                                             <p className="mb-1">{playlist.songIds.length} {playlist.songIds.length === 1 ? "song" : "songs"}</p>
                                         </div>
                                     </Link>
