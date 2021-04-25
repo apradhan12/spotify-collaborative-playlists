@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Col, Container, Form, FormControl, Modal, Row, Table } from "react-bootstrap";
+import { Alert, Button, Col, Container, Form, FormControl, Modal, Row, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { playlistMap, songMap, userMap } from "../../common/data";
 import { secondsToMinutesString } from "../../common/utils";
@@ -90,6 +90,8 @@ interface State {
     selectedAddSongId: string;
     addSearchFocused: boolean;
     removeSongIds: string[];
+    recentAddSongRequest: boolean;
+    recentRemoveSongRequest: boolean;
 }
 
 interface LocationState {
@@ -116,7 +118,9 @@ export default class RequestsPage extends React.Component<Props, State> {
             addSearchQuery: "",
             selectedAddSongId: "",
             addSearchFocused: false,
-            removeSongIds: []
+            removeSongIds: [],
+            recentAddSongRequest: false,
+            recentRemoveSongRequest: false
         }
         this.toggleAddSong = this.toggleAddSong.bind(this);
         this.toggleRemoveSong = this.toggleRemoveSong.bind(this);
@@ -191,7 +195,7 @@ export default class RequestsPage extends React.Component<Props, State> {
     handleAcceptRemoveRequest(songId: string, requestId: string) {
         return () => {
             let playlist: Playlist = playlistMap[this.props.match.params.playlistId];
-            playlist.addRequests = playlist.addRequests.filter((request) => request.id !== requestId);
+            playlist.removeRequests = playlist.removeRequests.filter((request) => request.id !== requestId);
             playlist.songIds = playlist.songIds.filter((id) => id !== songId);
 
             playlistMap[this.props.match.params.playlistId] = playlist;
@@ -218,7 +222,11 @@ export default class RequestsPage extends React.Component<Props, State> {
                 // todo fix s1234 repeated key
                 playlistMap[playlist.id].removeRequests.push({id: `r${playlistMap[playlist.id].removeRequests.length + 1}`, song: songMap[element], usersVoted: ["hci2021"]});
             });
-            this.setState({addSearchQuery: "", addSearchFocused: false, removeSongIds: [], showAddSong: false});
+            this.setState({addSearchQuery: "", addSearchFocused: false, removeSongIds: [], showAddSong: false, recentRemoveSongRequest: true});
+            setTimeout(function() {
+                //@ts-ignore (sorry!)
+                this.setState({recentRemoveSongRequest: false})
+            }.bind(this), 3000)
             this.toggleRemoveSong();
         };
 
@@ -253,6 +261,9 @@ export default class RequestsPage extends React.Component<Props, State> {
                 <Row className="mb-4">
                     <Col>
                         <h2 className="museo-display-light">Add Song Requests</h2>
+                        <Alert variant="success" show={this.state.recentAddSongRequest}>
+                            Your request to add a song from the playlist was made successfully.
+                        </Alert> 
                         <RequestsTable handleAcceptRequest={this.handleAcceptAddRequest}
                                        adminPermissions={creator.username === this.props.loggedInUsername}
                                        requests={playlist.addRequests}
@@ -266,6 +277,9 @@ export default class RequestsPage extends React.Component<Props, State> {
                 <Row className="mb-4">
                     <Col>
                         <h2 className="museo-display-light">Remove Song Requests</h2>
+                        <Alert variant="success" show={this.state.recentRemoveSongRequest}>
+                            Your request to remove a song from the playlist was made successfully.
+                        </Alert> 
                         <RequestsTable handleAcceptRequest={this.handleAcceptRemoveRequest}
                                        adminPermissions={creator.username === this.props.loggedInUsername}
                                        requests={playlist.removeRequests}
@@ -341,7 +355,11 @@ export default class RequestsPage extends React.Component<Props, State> {
                             this.state.selectedAddSongId ? (
                                 <Button variant="primary" onClick={() => {
                                     playlistMap[playlist.id].addRequests.push({id: `r${playlistMap[playlist.id].addRequests.length + 1}`, song: songMap[this.state.selectedAddSongId], usersVoted: ["hci2021"]});
-                                    this.setState({addSearchQuery: "", addSearchFocused: false, selectedAddSongId: "", showAddSong: false});
+                                    this.setState({addSearchQuery: "", addSearchFocused: false, selectedAddSongId: "", showAddSong: false, recentAddSongRequest: true});
+                                    setTimeout(function() {
+                                        //@ts-ignore (sorry!)
+                                        this.setState({recentAddSongRequest: false})
+                                    }.bind(this), 3000)
                                 }}>
                                     Request this song
                                 </Button>
