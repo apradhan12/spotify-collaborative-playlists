@@ -43,7 +43,17 @@ export default function PlaylistPage(props: Props) {
                     <h1 className="museo-display-black">{playlist.title}</h1>
                     <p className="museo-300 mb-0">Created by <Link to={`/user/${creator.username}`}>{creator.displayName}</Link></p>
                     <p className="museo-300 italic">{songs.length} {songs.length === 1 ? "song" : "songs"}, {secondsToHoursString(sum(songs.map(song => song.duration)))}</p>
-                    <Button variant="outline-dark" className="museo-300">Share</Button>
+                    <Button 
+                        variant="outline-dark" 
+                        className="museo-300" 
+                        onClick={() => {
+                            let link = window.location.href
+                            navigator.clipboard.writeText(link).then(() => {
+                                alert('Playlist link copied to clipboard!')
+                            })
+                    }}>
+                        Share
+                    </Button>
                 </Col>
                 <Col xs={4} className="text-right">
                     { (creator.username !== props.loggedInUsername) && (
