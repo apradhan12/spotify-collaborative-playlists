@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/spotify-collaborative-playlists/static/css/main.00eb51ed.chunk.css",
-    "main.js": "/spotify-collaborative-playlists/static/js/main.b24e159f.chunk.js",
-    "main.js.map": "/spotify-collaborative-playlists/static/js/main.b24e159f.chunk.js.map",
+    "main.css": "/spotify-collaborative-playlists/static/css/main.73abf36a.chunk.css",
+    "main.js": "/spotify-collaborative-playlists/static/js/main.6bdb0c50.chunk.js",
+    "main.js.map": "/spotify-collaborative-playlists/static/js/main.6bdb0c50.chunk.js.map",
     "runtime-main.js": "/spotify-collaborative-playlists/static/js/runtime-main.c65f5d70.js",
     "runtime-main.js.map": "/spotify-collaborative-playlists/static/js/runtime-main.c65f5d70.js.map",
     "static/js/2.ea80d87e.chunk.js": "/spotify-collaborative-playlists/static/js/2.ea80d87e.chunk.js",
@@ -10,13 +10,13 @@
     "static/js/3.d2cae57b.chunk.js": "/spotify-collaborative-playlists/static/js/3.d2cae57b.chunk.js",
     "static/js/3.d2cae57b.chunk.js.map": "/spotify-collaborative-playlists/static/js/3.d2cae57b.chunk.js.map",
     "index.html": "/spotify-collaborative-playlists/index.html",
-    "static/css/main.00eb51ed.chunk.css.map": "/spotify-collaborative-playlists/static/css/main.00eb51ed.chunk.css.map",
+    "static/css/main.73abf36a.chunk.css.map": "/spotify-collaborative-playlists/static/css/main.73abf36a.chunk.css.map",
     "static/js/2.ea80d87e.chunk.js.LICENSE.txt": "/spotify-collaborative-playlists/static/js/2.ea80d87e.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.c65f5d70.js",
     "static/js/2.ea80d87e.chunk.js",
-    "static/css/main.00eb51ed.chunk.css",
-    "static/js/main.b24e159f.chunk.js"
+    "static/css/main.73abf36a.chunk.css",
+    "static/js/main.6bdb0c50.chunk.js"
   ]
 }
