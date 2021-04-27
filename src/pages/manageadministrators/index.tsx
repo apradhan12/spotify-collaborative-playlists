@@ -14,9 +14,11 @@ interface Props {
 
 interface State {
     showHide: boolean;
+    showHideRemove: boolean;
     searchQuery: string;
     selectedAdminUsername: string;
     searchFocused: boolean;
+    removeAdminUsernames: string[];
 }
 
 export default class ManageAdmin extends React.Component<Props, State> {
@@ -25,10 +27,12 @@ export default class ManageAdmin extends React.Component<Props, State> {
         super(props);
         this.state = {
             showHide: false,
+            showHideRemove: false,
             searchQuery: "",
             selectedAdminUsername: "",
-            searchFocused: false
-        }
+            searchFocused: false,
+            removeAdminUsernames: []
+        };
         this.handleModalShowHide = this.handleModalShowHide.bind(this);
         this.updateSearchQuery = this.updateSearchQuery.bind(this);
     }
@@ -77,13 +81,13 @@ export default class ManageAdmin extends React.Component<Props, State> {
                 </Row>
                 <Row>
                     <Col xs={12}>
-                        <Button variant="danger">Remove an Administrator</Button>
+                        <Button variant="danger" onClick={() => this.setState({showHideRemove: true})}>Remove an Administrator</Button>
                     </Col>
                 </Row>
 
                 <Modal show={this.state.showHide} backdrop="static" dialogClassName="museo-300">
                     <Modal.Header onClick={() => this.handleModalShowHide()}>
-                        <Modal.Title className="museo-display-black">Add new Administrator</Modal.Title>
+                        <Modal.Title className="museo-display-black">Add an Administrator</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form onFocus={() => this.setState({ searchFocused: true })}>
@@ -138,6 +142,65 @@ export default class ManageAdmin extends React.Component<Props, State> {
                                     this.setState({searchQuery: "", searchFocused: false, selectedAdminUsername: "", showHide: false});
                                 }}>
                                     Add Administrator
+                                </Button>
+                            ) : ""
+                        }
+                    </Modal.Footer>
+                </Modal>
+
+
+                <Modal show={this.state.showHideRemove} backdrop="static" dialogClassName="museo-300 larger-width-modal">
+                    <Modal.Header>
+                        <Modal.Title className="museo-display-black">Remove an Administrator</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Table striped bordered hover>
+                            <thead>
+                            <tr>
+                            <th className="width-50">Username</th>
+                            <th className="width-50">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>{playlist.admins.map((adminName) => (
+                                this.state.removeAdminUsernames.includes(adminName) ? (
+                                        <tr key={adminName}>
+                                            <td colSpan={2}>You removed {adminName}.&nbsp;
+                                                <Button
+                                                    variant="outline-secondary"
+                                                    onClick={() => this.setState(prevState => ({
+                                                        removeAdminUsernames: prevState.removeAdminUsernames.filter(username => username !== adminName)
+                                                    }))}
+                                                >
+                                                    Undo
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    ) :
+                                    <tr key={adminName}>
+                                        <td>{adminName}</td>
+                                        <td><Button variant="outline-danger"
+                                                    onClick={() => this.setState(prevState =>
+                                                        ({removeAdminUsernames: prevState.removeAdminUsernames.concat(adminName)}))}>
+                                            Remove administrator
+                                        </Button>
+                                        </td>
+                                    </tr>
+                            ))
+                            }
+                            </tbody>
+                        </Table>
+                    </Modal.Body>
+                    <Modal.Footer style={{ justifyContent: "flex-end" }}>
+                        <Button variant="secondary" onClick={() => { this.setState({ removeAdminUsernames: [], showHideRemove: false }) }}>
+                            Cancel and close this window
+                        </Button>
+                        {
+                            this.state.removeAdminUsernames ? (
+                                <Button variant="primary" onClick={() => {
+                                    playlistMap[playlist.id].admins = playlist.admins.filter(admin => !this.state.removeAdminUsernames.includes(admin));
+                                    this.setState({removeAdminUsernames: [], showHideRemove: false});
+                                }}>
+                                    Finish removing administrators
                                 </Button>
                             ) : ""
                         }

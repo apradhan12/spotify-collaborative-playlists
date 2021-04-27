@@ -9,3 +9,7 @@ th.customHeader-2 {
 .larger-width-modal {
     max-width: 1000px;
 }
+
+th.width-50 {
+    width: 50%;
+}
